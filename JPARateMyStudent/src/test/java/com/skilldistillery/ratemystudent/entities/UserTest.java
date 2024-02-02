@@ -33,7 +33,7 @@ class UserTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        User = em.find(User.class, 1);
+        User = em.find(User.class, 2);
     }
 
     @AfterEach
@@ -46,9 +46,17 @@ class UserTest {
     void test_User_has_Username() {
         assertNotNull(User);
         assertNotNull(User.getUsername());
+        assertEquals("Jblack", User.getUsername());
+        assertEquals("Jack", User.getFirstName());
+        assertEquals("Jblack@SOR.com", User.getEmail());
 
-        assertEquals("FIXME", User.getUsername());
-
+    }
+    
+    @Test
+    void test_User_has_school() {
+    	assertNotNull(User);
+    	assertNotNull(User.getSchool());
+    	
     }
     
    

@@ -2,10 +2,13 @@ package com.skilldistillery.ratemystudent.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,7 +26,21 @@ public class User {
 	
 	private String role;
 	
+	@ManyToOne
+	@JoinColumn(name="school_id")
+	private School school;
+	
+	@Column(name="first_name")
 	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	private String email;
+	
+	@ManyToOne
+	@JoinColumn(name="subject_id")
+	private Subject subject;
 	
 	public User() {
 		
@@ -69,6 +86,46 @@ public class User {
 		this.role = role;
 	}
 
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -89,7 +146,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", role=" + role + "]";
+				+ ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
 	
 	
