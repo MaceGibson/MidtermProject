@@ -1,8 +1,6 @@
 package com.skilldistillery.ratemystudent.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,11 +12,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class SchoolTest {
 
 	private static EntityManagerFactory emf;
     private EntityManager em;
-    private User user;
+    private School school;
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -33,23 +31,24 @@ class UserTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        user = em.find(User.class, 1);
+        school = em.find(School.class, 1);
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        user = null;
+        school = null;
         em.close();
     }
 
     @Test
-    void test_User_has_Username() {
-        assertNotNull(user);
-        assertNotNull(user.getUsername());
+    void test_School_has_Schoolname() {
+        assertNotNull(school);
+        assertNotNull(school.getName());
 
-        assertEquals("FIXME", user.getUsername());
+        assertEquals("Skill Distillery", school.getName());
 
     }
     
    
 }
+
