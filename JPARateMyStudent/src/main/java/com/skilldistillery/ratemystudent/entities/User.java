@@ -1,5 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,6 +44,9 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name="subject_id")
 	private Subject subject;
+	
+	@OneToMany(mappedBy="user")
+	private List <Review> reviews;
 	
 	public User() {
 		
@@ -124,6 +130,25 @@ public class User {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+	
+	public void addReview(Review review) {
+		if(reviews == null) { reviews = new ArrayList<>();}
+		if(! reviews.contains(review)) {
+			reviews.add(review);
+			
+			if(review.getUser() != null) {
+				review.getUser().removeReview(review);
+			}
+			review.setUser(this);
+		}
+	}
+	
+	public void removeReview(Review review) {
+		if (reviews != null && reviews.contains(review)) {
+			reviews.remove(review);
+			review.setUser(null);
+		}
 	}
 
 	@Override
