@@ -1,5 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +34,9 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
+    
+    @OneToMany(mappedBy="student")
+    private List<Review> reviews;
 
     // no arg constructor
     public Student() {
@@ -76,6 +82,14 @@ public class Student {
 		this.school = school;
 	}
 
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -97,6 +111,26 @@ public class Student {
 	public String toString() {
 		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", graduationYear="
 				+ graduationYear + ", school=" + school + "]";
+	}
+	
+	public void addReview(Review review) {
+		if(reviews == null) {
+			reviews = new ArrayList<>();
+		}
+		if(!reviews.contains(review)) {
+			reviews.add(review);
+			if(review.getStudent() != null) {
+				review.getStudent().removeReview(review);
+			}
+			review.setStudent(this);
+		}
+	}
+	
+	public void removeReview(Review review) {
+		if (reviews != null && reviews.contains(review)) {
+			reviews.remove(review);
+			review.setStudent(null);
+		}
 	}
 	
 }
