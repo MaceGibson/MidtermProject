@@ -1,6 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,6 +126,26 @@ public class Comment {
 			return false;
 		Comment other = (Comment) obj;
 		return id == other.id;
+	}
+	
+	public void addComment(Comment comment) {
+		if(comments == null) {
+			comments = new ArrayList<>();
+		}
+		if(!comments.contains(comment)) {
+			comments.add(comment);
+			if(comment.getInReplyTo() != null) {
+				comment.getInReplyTo().removeComment(comment);
+			}
+			comment.setInReplyTo(this);
+		}
+	}
+	
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.setInReplyTo(null);
+		}
 	}
 
 }
