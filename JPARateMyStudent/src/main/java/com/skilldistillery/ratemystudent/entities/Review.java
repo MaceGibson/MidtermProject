@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,6 +48,9 @@ public class Review {
 	@ManyToMany
 	@JoinTable(name = "review_badge", joinColumns = @JoinColumn(name = "review_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
 	private List<Badge> badges;
+
+	@OneToMany(mappedBy = "review")
+	private List<Comment> comments;
 
 	// no arg constructor
 	public Review() {
@@ -115,6 +119,35 @@ public class Review {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public void addComment(Comment comment) {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+
+			if (comment.getReview() != null) {
+				comment.getReview().removeComment(comment);
+			}
+			comment.setReview(this);
+		}
+	}
+
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.setReview(null);
+		}
 	}
 
 	public void addBadge(Badge badge) {
