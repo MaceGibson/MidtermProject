@@ -21,6 +21,9 @@ public class School {
 	@OneToMany(mappedBy="school")
 	private List<User> users;
 	
+	@OneToMany(mappedBy="school")
+	private List<Student> students;
+	
 	public School() {}
 
 	public int getId() {
@@ -45,6 +48,14 @@ public class School {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	@Override
@@ -89,5 +100,24 @@ public class School {
 		}
 	}
 	
+	public void addStudent(Student student) {
+		if(students == null) {
+			students = new ArrayList<>();
+		}
+		if(!students.contains(student)) {
+			students.add(student);
+			if(student.getSchool() != null) {
+				student.getSchool().removeStudent(student);
+			}
+			student.setSchool(this);
+		}
+	}
+	
+	public void removeStudent(Student student) {
+		if (students != null && students.contains(student)) {
+			students.remove(student);
+			student.setSchool(null);
+		}
+	}
 
 }
