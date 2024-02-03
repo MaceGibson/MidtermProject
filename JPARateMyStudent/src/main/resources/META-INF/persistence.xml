@@ -9,6 +9,8 @@
     <class>com.skilldistillery.ratemystudent.entities.Student</class>
     <class>com.skilldistillery.ratemystudent.entities.School</class>
     <class>com.skilldistillery.ratemystudent.entities.Review</class>
+    <class>com.skilldistillery.ratemystudent.entities.Subject</class>
+    <class>com.skilldistillery.ratemystudent.entities.Comment</class>
     
     
 
