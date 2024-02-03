@@ -1,8 +1,6 @@
 package com.skilldistillery.ratemystudent.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,11 +12,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class SubjectTest {
 
 	private static EntityManagerFactory emf;
     private EntityManager em;
-    private User user;
+    private Subject subject;
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -33,38 +31,21 @@ class UserTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        user = em.find(User.class, 2);
+        subject = em.find(Subject.class, 1);
 
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        user = null;
+        subject = null;
         em.close();
     }
 
     @Test
     void test_User_has_Username() {
-        assertNotNull(user);
-        assertNotNull(user.getUsername());
-        assertEquals("Jblack", user.getUsername());
-        assertEquals("Jack", user.getFirstName());
-        assertEquals("Jblack@SOR.com", user.getEmail());
-
-    }
-    
-    @Test
-    void test_User_has_school() {
-    	assertNotNull(user);
-    	assertNotNull(user.getSchool());
-    	assertEquals("School Of Rock", user.getSchool().getName());
+        assertNotNull(subject);
+        assertNotNull(subject.getName());
+        assertEquals("math", subject.getName());
     }
 
-    @Test
-    void test_User_has_subject() {
-    	assertNotNull(user);
-    	assertNotNull(user.getSubject());
-    	assertEquals("music", user.getSubject().getName());
-    }
-   
 }
