@@ -1,6 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,17 +44,17 @@ public class Review {
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-	
+
 	@ManyToMany
-	@JoinTable(name="review_badge",
-	joinColumns=@JoinColumn(name="review_id"),
-	inverseJoinColumns=@JoinColumn(name="badge_id"))
+	@JoinTable(name = "review_badge", joinColumns = @JoinColumn(name = "review_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
 	private List<Badge> badges;
-	
-	
-	//no arg constructor
-	public Review () {
-		
+
+	@OneToMany(mappedBy = "review")
+	private List<Comment> comments;
+
+	// no arg constructor
+	public Review() {
+
 	}
 
 	public int getId() {
@@ -67,16 +69,24 @@ public class Review {
 		return reviewText;
 	}
 
-	public void setReviewText(String reviewText) {
-		this.reviewText = reviewText;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
-		user = user;
+		this.user = user;
+	}
+
+	public List<Badge> getBadges() {
+		return badges;
+	}
+
+	public void setBadges(List<Badge> badges) {
+		this.badges = badges;
+	}
+
+	public void setReviewText(String reviewText) {
+		this.reviewText = reviewText;
 	}
 
 	public Student getStudent() {
@@ -109,6 +119,52 @@ public class Review {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public void addComment(Comment comment) {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+
+			if (comment.getReview() != null) {
+				comment.getReview().removeComment(comment);
+			}
+			comment.setReview(this);
+		}
+	}
+
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.setReview(null);
+		}
+	}
+
+	public void addBadge(Badge badge) {
+		if (badges == null) {
+			badges = new ArrayList<>();
+			if (!badges.contains(badge)) {
+				badges.add(badge);
+				badge.addReview(this);
+			}
+		}
+	}
+
+	public void removeBadge(Badge badge) {
+		if (badges != null && badges.contains(badge)) {
+			badges.remove(badge);
+			badge.removeReview(this);
+		}
 	}
 
 	@Override

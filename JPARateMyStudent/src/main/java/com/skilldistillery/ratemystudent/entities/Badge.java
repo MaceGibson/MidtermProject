@@ -1,5 +1,6 @@
 package com.skilldistillery.ratemystudent.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,12 +19,11 @@ public class Badge {
 
 	private String name;
 
-	@Column(name="image")
+	@Column(name = "image")
 	private String imgUrl;
-	
-	@ManyToMany(mappedBy="badges")
+
+	@ManyToMany(mappedBy = "badges")
 	private List<Review> reviews;
-	
 
 	public Badge() {
 	}
@@ -50,6 +50,23 @@ public class Badge {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public void addReview(Review review) {
+		if (reviews == null) {
+			reviews = new ArrayList<>();
+			if (!reviews.contains(review)) {
+				reviews.add(review);
+				review.addBadge(this);
+			}
+		}
+	}
+
+	public void removeReview(Review review) {
+		if (reviews != null && reviews.contains(review)) {
+			reviews.remove(review);
+			review.removeBadge(this);
+		}
 	}
 
 	@Override
