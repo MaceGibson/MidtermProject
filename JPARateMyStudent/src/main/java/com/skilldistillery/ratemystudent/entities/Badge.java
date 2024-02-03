@@ -1,5 +1,6 @@
 package com.skilldistillery.ratemystudent.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Badge {
@@ -18,6 +20,10 @@ public class Badge {
 
 	@Column(name="image")
 	private String imgUrl;
+	
+	@ManyToMany(mappedBy="badges")
+	private List<Review> reviews;
+	
 
 	public Badge() {
 	}

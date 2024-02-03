@@ -1,6 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -25,7 +28,7 @@ public class Review {
 
 	@ManyToOne
 	@JoinColumn(name = "teacher_id")
-	private User User;
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = "student_id")
@@ -39,6 +42,13 @@ public class Review {
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
+	
+	@ManyToMany
+	@JoinTable(name="review_badge",
+	joinColumns=@JoinColumn(name="review_id"),
+	inverseJoinColumns=@JoinColumn(name="badge_id"))
+	private List<Badge> badges;
+	
 	
 	//no arg constructor
 	public Review () {
@@ -62,11 +72,11 @@ public class Review {
 	}
 
 	public User getUser() {
-		return User;
+		return user;
 	}
 
 	public void setUser(User user) {
-		User = user;
+		user = user;
 	}
 
 	public Student getStudent() {
@@ -120,7 +130,7 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [id=" + id + ", reviewText=" + reviewText + ", User=" + User + ", student=" + student
+		return "Review [id=" + id + ", reviewText=" + reviewText + ", User=" + user + ", student=" + student
 				+ ", rating=" + rating + ", subject=" + subject + ", createdAt=" + createdAt + "]";
 	}
 }
