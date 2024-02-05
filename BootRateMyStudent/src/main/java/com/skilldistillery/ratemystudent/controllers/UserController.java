@@ -35,9 +35,7 @@ public class UserController {
 	
 	@GetMapping(path="searchStudentResults.do")
 	public String searchStudentRequest(@RequestParam("student") String student, Model model) {
-		System.out.println("Before DAO");
 		List<Student> students = userDAO.searchByStudent(student);
-		System.out.println("After DAO");
 		model.addAttribute("students", students);
 		return "searchResults";
 	}

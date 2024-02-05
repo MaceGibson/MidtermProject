@@ -5,15 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Search Results</title>
 </head>
 <body>
-	Search Results Page
+	Search Results Page <br>
 	<c:if test="${not empty schools}">
-		search by school
+		<c:forEach var="school" items="${schools }">
+			${school.name} <br>
+		</c:forEach>		
 	</c:if>
 	<c:if test="${not empty students}">
-		search by student
+		<c:forEach var="student" items="${students }">
+			${student.firstName} ${student.lastName} <br>
+		</c:forEach>		
 	</c:if>
 </body>
 </html>
