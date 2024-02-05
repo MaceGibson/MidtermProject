@@ -64,10 +64,17 @@ public class UserController {
 	}
 	
 	@PostMapping("createComment.do")
-    public String createComment(@RequestParam("reviewId") int reviewId, @ModelAttribute("comment") Comment comment) {
-		System.out.println(reviewId + ": " + comment);
-		comment.setReview(userDAO.findReviewById(reviewId));
-        userDAO.createComment(comment);
+    public String createComment(@RequestParam("reviewId") int reviewId, Comment comment, Model model){//@RequestParam("commentText") String commentText) {
+//		Comment com = new Comment();
+//		com.setCommentText(commentText);
+//		com.setReview(userDAO.findReviewById(reviewId));
+//        userDAO.createComment(com);
+		Review r = userDAO.findReviewById(reviewId);
+		comment.setReview(r);
+		Student student = userDAO.findByStudentId(r.getStudent().getId());
+		model.addAttribute("student", student);
+		userDAO.createComment(comment);
+		
         return "details";
     }
 	
