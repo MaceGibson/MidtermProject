@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.ratemystudent.data.UserDAO;
 import com.skilldistillery.ratemystudent.entities.User;
@@ -35,5 +37,13 @@ public class LoginController {
 		} else {
 			return "login";
 		}
+	}
+	
+	@RequestMapping(path="logout.do")
+	public ModelAndView doLogout(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		session.removeAttribute("loginUser");
+		mv.setViewName("home");
+		return mv;
 	}
 }
