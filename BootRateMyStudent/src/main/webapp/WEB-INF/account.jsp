@@ -23,7 +23,7 @@
 		<h2>School: <c:out value="${sessionScope.loginUser.school.name}"/></h2>
 		<h2>Subject: <c:out value="${sessionScope.loginUser.subject.name}"/></h2>
 		<c:forEach var="review" items="${sessionScope.loginUser.reviews }">
-			<p>${review.reviewText}</p>
+			<p><a href="details.do?studentId=${review.student.id}"><br>${review.reviewText}</a></p>
 		</c:forEach>		
 	</c:when>
 	<c:otherwise>
