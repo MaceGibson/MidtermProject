@@ -9,6 +9,7 @@ import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.User;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
@@ -55,5 +56,19 @@ public class UserDAOImpl implements UserDAO{
 	public School findBySchoolId(int id) {
 		return em.find(School.class, id);
 	}
+
+	  @Override
+	  public User getUserByUserNameAndPassword(String username, String password) {
+		  String jpql = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
+		    User user = null;
+		    try {
+		        user = em.createQuery(jpql, User.class)
+		                .setParameter("username", username)
+		                .setParameter("password", password)
+		                .getSingleResult();
+		    } catch (NoResultException e) {
+		    }
+		    return user;
+		}
 
 }
