@@ -8,6 +8,7 @@
 <title>Details Page</title>
 </head>
 <body>
+<jsp:include page="nav.jsp"/>
 	<c:if test="${not empty school}">
 		<c:forEach var="student" items="${school.students }">
 			${student.firstName} ${student.lastName} <br>
@@ -29,7 +30,7 @@
 						<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
 						<button type="submit">Submit</button> 
 					</form>
-				</c:forEach>
+				</c:forEach> 
 	<form action="createComment.do" method="POST">
 		<input type="hidden" name="reviewId" value="${review.id}"> 
 		<label for="commentText">Leave a Comment:</label>
@@ -37,34 +38,35 @@
 		<button type="submit">Submit</button> 
 	</form>
 		</c:forEach>
-		<c:if test="${not empty sessionScope.loginUser}">
-			<form action="createReview.do" method="POST">
-				<input type="hidden" name="studentId" value="${student.id}"> 
-				<input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
-				<label for="title">Title:</label>
-				<input type="text" name="title" style= "height:10px; width:200px;">
-				<label for="reviewText">Write a Review:</label>
-				<input type="text" name="reviewText" style= "height:50px; width:200px;" placeholder="write a review">
-				<label for="subject">Subject: </label> 
-				<select name="subject" value="${review.subject}" required>
-					<option value=1>Math</option>
-					<option value=2>English</option>
-					<option value=3>History</option>
-					<option value=4>Science</option>
-					<option value=5>Computer Science</option>
-					<option value=6>Music</option>
-				</select> 
-				<label for="rating">Rating:</label>
-				<select name="rating" value="${review.rating}" required>
-					<option value=1>*</option>
-					<option value=2>**</option>
-					<option value=3>***</option>
-					<option value=4>****</option>
-					<option value=5>*****</option>
-				</select> 
-			</form>
-			 
-		</c:if>
+		<c:choose>
+			<c:when test="${not empty sessionScope.loginUser}">
+				<form action="createReview.do" method="POST">
+					<input type="hidden" name="studentId" value="${student.id}"> 
+					<input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
+					<label for="title">Title:</label>
+					<input type="text" name="title" style= "height:10px; width:200px;">
+					<label for="reviewText">Write a Review:</label>
+					<input type="text" name="reviewText" style= "height:50px; width:200px;" placeholder="write a review">
+					<label for="subject">Subject: </label> 
+					<select name="subject" value="${review.subject}" required>
+						<option value=1>Math</option>
+						<option value=2>English</option>
+						<option value=3>History</option>
+						<option value=4>Science</option>
+						<option value=5>Computer Science</option>
+						<option value=6>Music</option>
+					</select> 
+					<label for="rating">Rating:</label>
+					<select name="rating" value="${review.rating}" required>
+						<option value=1>*</option>
+						<option value=2>**</option>
+						<option value=3>***</option>
+						<option value=4>****</option>
+						<option value=5>*****</option>
+					</select> 
+				</form>
+			 </c:when>
+		</c:choose>
 	</c:if>
 </body>
 </html>
