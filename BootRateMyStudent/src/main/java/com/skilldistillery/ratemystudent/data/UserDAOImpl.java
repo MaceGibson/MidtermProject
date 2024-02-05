@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public User authenticateUser(String username, String password) {
-		String query= "SELECT u FROM User u where u.username = :username AND u.password = :password";
+		String query= "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
 		User u = em.createQuery(query, User.class)
 				.setParameter("username", username)
 				.setParameter("password", password)
@@ -32,14 +32,18 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<School> searchByschool(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		String jpql = "SELECT s FROM School s WHERE s.name LIKE :keyword";
+        return em.createQuery(jpql, School.class)
+                .setParameter("keyword", "%" + keyword + "%")
+                .getResultList();
+    }
 
 	@Override
 	public List<Student> searchByStudent(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "SELECT s FROM Student s WHERE s.first_name LIKE :keyword OR s.last_name LIKE :keyword";
+		return em.createQuery(jpql, Student.class)
+				.setParameter("keyword","%"+ keyword+"%")
+				.getResultList();
 	}
 
 }
