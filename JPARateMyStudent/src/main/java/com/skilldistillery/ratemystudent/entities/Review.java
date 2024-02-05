@@ -24,6 +24,8 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	private String title;
 
 	@Column(name = "review_text")
 	private String reviewText;
@@ -63,6 +65,14 @@ public class Review {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getReviewText() {
@@ -186,7 +196,10 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [id=" + id + ", reviewText=" + reviewText + ", User=" + user + ", student=" + student
-				+ ", rating=" + rating + ", subject=" + subject + ", createdAt=" + createdAt + "]";
+		return "Review [id=" + id + ", title=" + title + ", reviewText=" + reviewText + ", user=" + user + ", student="
+				+ student + ", rating=" + rating + ", subject=" + subject + ", createdAt=" + createdAt + ", num badges="
+				+ badges.size() + ", num comments=" + comments.size() + "]";
 	}
+
+	
 }
