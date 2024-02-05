@@ -1,11 +1,17 @@
 package com.skilldistillery.ratemystudent.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +28,25 @@ public class User {
 	private boolean enabled;
 	
 	private String role;
+	
+	@ManyToOne
+	@JoinColumn(name="school_id")
+	private School school;
+	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	private String email;
+	
+	@ManyToOne
+	@JoinColumn(name="subject_id")
+	private Subject subject;
+	
+	@OneToMany(mappedBy="user")
+	private List <Review> reviews;
 	
 	public User() {
 		
@@ -67,6 +92,73 @@ public class User {
 		this.role = role;
 	}
 
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public void addReview(Review review) {
+		if(reviews == null) { reviews = new ArrayList<>();}
+		if(! reviews.contains(review)) {
+			reviews.add(review);
+			
+			if(review.getUser() != null) {
+				review.getUser().removeReview(review);
+			}
+			review.setUser(this);
+		}
+	}
+	
+	public void removeReview(Review review) {
+		if (reviews != null && reviews.contains(review)) {
+			reviews.remove(review);
+			review.setUser(null);
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -87,7 +179,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", role=" + role + "]";
+				+ ", role=" + role + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
 	
 	

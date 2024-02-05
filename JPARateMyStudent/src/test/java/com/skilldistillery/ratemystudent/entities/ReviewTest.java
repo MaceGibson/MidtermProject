@@ -14,11 +14,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class ReviewTest {
 
 	private static EntityManagerFactory emf;
     private EntityManager em;
-    private User user;
+    private Review review;
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -33,45 +33,36 @@ class UserTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        user = em.find(User.class, 2);
-
+        review = em.find(Review.class, 1);
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        user = null;
+    	review = null;
         em.close();
     }
 
     @Test
-    void test_User_has_Username() {
-        assertNotNull(user);
-        assertNotNull(user.getUsername());
-        assertEquals("Jblack", user.getUsername());
-        assertEquals("Jack", user.getFirstName());
-        assertEquals("Jblack@SOR.com", user.getEmail());
-
+    void test_mapping() {
+    	 assertNotNull(review);
+         assertEquals("This is a review!", review.getReviewText());
+         assertNotNull(review.getUser());
+         assertNotNull(review.getStudent());
+         assertEquals(4, review.getRating());
+         assertNotNull(review.getSubject());
     }
     
     @Test
-    void test_User_has_school() {
-    	assertNotNull(user);
-    	assertNotNull(user.getSchool());
-    	assertEquals("School Of Rock", user.getSchool().getName());
-    }
-
-    @Test
-    void test_User_has_subject() {
-    	assertNotNull(user);
-    	assertNotNull(user.getSubject());
-    	assertEquals("music", user.getSubject().getName());
+    void test_Review_has_badges() {
+    	assertNotNull(review);
+    	assertNotNull(review.getBadges());
+    	assertFalse(review.getBadges().isEmpty());
     }
     
     @Test
-    void test_user_has_reviews() {
-    	assertNotNull(user);
-    	assertNotNull(user.getReviews());
-    	assertFalse(user.getReviews().isEmpty());
+    void test_Review_has_comments() {
+    	assertNotNull(review);
+    	assertNotNull(review.getComments());
+    	assertFalse(review.getComments().isEmpty());
     }
-   
 }
