@@ -14,4 +14,5 @@ public interface UserDAO {
 	List<Student> searchByStudent (String keyword);
 	Student findByStudentId(int id);
 	School findBySchoolId(int id);
+	User getUserByUserNameAndPassword(String userName, String password);
 }
