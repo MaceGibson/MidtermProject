@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.ratemystudent.data.UserDAO;
+import com.skilldistillery.ratemystudent.entities.Comment;
+import com.skilldistillery.ratemystudent.entities.Review;
 import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.User;
@@ -57,6 +61,24 @@ public class UserController {
 			return "details";
 		}
 		return "home";
+	}
+	
+	@PostMapping("createComment.do")
+    public String createComment(@RequestParam("reviewId") int reviewId, @ModelAttribute("comment") Comment comment) {
+		comment.setReview(userDAO.findReviewById(reviewId));
+        userDAO.createComment(comment);
+        return "redirect:/details";
+    }
+	
+	@GetMapping("reviewForm.do")
+	public String reviewForm() {
+		return "reviewForm";
+	}
+	
+	@PostMapping("createReview.do")
+	public String createReview(Review review) {
+		userDAO.createReview(review);
+		return "redirect:/details";
 	}
 
 }
