@@ -65,9 +65,10 @@ public class UserController {
 	
 	@PostMapping("createComment.do")
     public String createComment(@RequestParam("reviewId") int reviewId, @ModelAttribute("comment") Comment comment) {
+		System.out.println(reviewId + ": " + comment);
 		comment.setReview(userDAO.findReviewById(reviewId));
         userDAO.createComment(comment);
-        return "redirect:/details";
+        return "details";
     }
 	
 	@GetMapping("reviewForm.do")

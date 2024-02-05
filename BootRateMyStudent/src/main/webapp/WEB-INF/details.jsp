@@ -21,12 +21,12 @@
 		${student.school.name}<br>
 		<c:forEach var="review" items="${student.reviews }">
 			${review.reviewText } <br>
-	<form action="details.do" method="POST">
+	<form action="createComment.do" method="POST">
 		<input type="hidden" name="reviewId" value="${review.id}"> 
 		<label for="comment">Leave a Comment:</label>
-		<textarea name="comment" rows="4" cols="50"></textarea>
-		<input type="submit" value="Submit" > 
-</form>
+		<input type="text" name="comment" rows="4" cols="50" value="${comment.commentText}" placeholder="write a comment">
+		<button type="submit">Submit</button> 
+	</form>
 		</c:forEach>
 	</c:if>
 </body>

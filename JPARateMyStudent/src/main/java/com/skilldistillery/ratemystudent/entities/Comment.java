@@ -105,7 +105,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", inReplyTo=" + inReplyTo + ", num comments=" + comments.size() + ", createdAt=" + createdAt
+		return "Comment [id=" + id + ", inReplyTo=" + inReplyTo + ", createdAt=" + createdAt
 				+ ", commentText=" + commentText + "]";
 	}
 
