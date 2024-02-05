@@ -1,7 +1,11 @@
 package com.skilldistillery.ratemystudent.data;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.ratemystudent.entities.School;
+import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.User;
 
 import jakarta.persistence.EntityManager;
@@ -24,6 +28,18 @@ public class UserDAOImpl implements UserDAO{
 				.setParameter("password", password)
 				.getSingleResult();
 		return u;
+	}
+
+	@Override
+	public List<School> searchByschool(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Student> searchByStudent(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
