@@ -44,11 +44,22 @@ class SchoolTest {
     void test_School_has_Schoolname() {
         assertNotNull(school);
         assertNotNull(school.getName());
-
         assertEquals("Skill Distillery", school.getName());
-
     }
     
+    @Test
+    void test_School_has_Users() {
+    	assertNotNull(school);
+    	assertNotNull(school.getUsers());
+    	assertFalse(school.getUsers().isEmpty());
+    }
+    
+    @Test
+    void test_School_has_students() {
+    	assertNotNull(school);
+    	assertNotNull(school.getStudents());
+    	assertFalse(school.getStudents().isEmpty());
+    }
    
 }
 

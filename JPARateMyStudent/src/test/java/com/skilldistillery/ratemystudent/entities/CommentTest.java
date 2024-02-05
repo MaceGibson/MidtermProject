@@ -44,11 +44,15 @@ class CommentTest {
     void test_Comment_has_Commentname() {
         assertNotNull(comment);
         assertNotNull(comment.getCommentText());
-
         assertEquals("This is a comment", comment.getCommentText());
-
     }
     
+    @Test
+    void test_Comment_has_comments() {
+    	assertNotNull(comment);
+    	assertNotNull(comment.getComments());
+    	assertFalse(comment.getComments().isEmpty());
+    }
    
 }
 

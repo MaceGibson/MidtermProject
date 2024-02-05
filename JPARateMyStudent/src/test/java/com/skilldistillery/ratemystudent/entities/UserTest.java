@@ -1,8 +1,8 @@
 package com.skilldistillery.ratemystudent.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -65,6 +65,13 @@ class UserTest {
     	assertNotNull(user);
     	assertNotNull(user.getSubject());
     	assertEquals("music", user.getSubject().getName());
+    }
+    
+    @Test
+    void test_user_has_reviews() {
+    	assertNotNull(user);
+    	assertNotNull(user.getReviews());
+    	assertFalse(user.getReviews().isEmpty());
     }
    
 }

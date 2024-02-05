@@ -49,4 +49,11 @@ class StudentTest {
         assertEquals(2027, student.getGraduationYear());
         assertEquals(3, student.getSchool().getId());
     }
+    
+    @Test
+    void test_Student_has_reviews() {
+    	assertNotNull(student);
+    	assertNotNull(student.getReviews());
+    	assertFalse(student.getReviews().isEmpty());
+    }
 }

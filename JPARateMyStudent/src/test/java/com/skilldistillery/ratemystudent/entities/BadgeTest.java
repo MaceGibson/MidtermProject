@@ -44,9 +44,15 @@ class BadgeTest {
     void test_Badge_has_Badgename() {
         assertNotNull(badge);
         assertNotNull(badge.getName());
-
         assertEquals("Hard Worker", badge.getName());
 
+    }
+    
+    @Test
+    void test_Badge_has_reviews() {
+    	assertNotNull(badge);
+    	assertNotNull(badge.getReviews());
+    	assertFalse(badge.getReviews().isEmpty());
     }
     
    

@@ -1,6 +1,7 @@
 package com.skilldistillery.ratemystudent.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.AfterAll;
@@ -49,5 +50,19 @@ class ReviewTest {
          assertNotNull(review.getStudent());
          assertEquals(4, review.getRating());
          assertNotNull(review.getSubject());
+    }
+    
+    @Test
+    void test_Review_has_badges() {
+    	assertNotNull(review);
+    	assertNotNull(review.getBadges());
+    	assertFalse(review.getBadges().isEmpty());
+    }
+    
+    @Test
+    void test_Review_has_comments() {
+    	assertNotNull(review);
+    	assertNotNull(review.getComments());
+    	assertFalse(review.getComments().isEmpty());
     }
 }
