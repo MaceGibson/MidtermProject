@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `review` (
   `rating` INT(1) NULL,
   `subject_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `title` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Review_Teacher1_idx` (`teacher_id` ASC),
   INDEX `fk_Review_Student1_idx` (`student_id` ASC),
@@ -259,8 +260,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`) VALUES (1, 'This is a review!', 2, 3, 4, 6, DEFAULT);
-INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`) VALUES (2, 'This is a bad review!', 3, 1, 1, 4, DEFAULT);
+INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`, `title`) VALUES (1, 'This is a review!', 2, 3, 4, 6, DEFAULT, 'This is a Title');
+INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`, `title`) VALUES (2, 'This is a bad review!', 3, 1, 1, 4, DEFAULT, 'Title here!');
 
 COMMIT;
 
