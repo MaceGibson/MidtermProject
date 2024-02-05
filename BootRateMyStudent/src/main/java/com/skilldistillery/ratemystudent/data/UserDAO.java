@@ -12,4 +12,6 @@ public interface UserDAO {
 	
 	List<School> searchByschool (String keyword);
 	List<Student> searchByStudent (String keyword);
+	Student findByStudentId(int id);
+	School findBySchoolId(int id);
 }
