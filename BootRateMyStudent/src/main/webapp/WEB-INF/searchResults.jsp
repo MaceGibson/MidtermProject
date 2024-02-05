@@ -9,5 +9,11 @@
 </head>
 <body>
 	Search Results Page
+	<c:if test="${not empty schools}">
+		search by school
+	</c:if>
+	<c:if test="${not empty students}">
+		search by student
+	</c:if>
 </body>
 </html>

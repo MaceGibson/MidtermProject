@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<Student> searchByStudent(String keyword) {
-		String jpql = "SELECT s FROM Student s WHERE s.first_name LIKE :keyword OR s.last_name LIKE :keyword";
+		String jpql = "SELECT s FROM Student s WHERE s.firstName LIKE :keyword OR s.lastName LIKE :keyword";
 		return em.createQuery(jpql, Student.class)
 				.setParameter("keyword","%"+ keyword+"%")
 				.getResultList();
