@@ -9,15 +9,20 @@
 </head>
 <body>
 	Search Results Page <br>
-	<c:if test="${not empty schools}">
-		<c:forEach var="school" items="${schools }">
-			${school.name} <br>
-		</c:forEach>		
-	</c:if>
-	<c:if test="${not empty students}">
-		<c:forEach var="student" items="${students }">
-			${student.firstName} ${student.lastName} <br>
-		</c:forEach>		
-	</c:if>
+	<c:choose>
+		<c:when test="${not empty schools}">
+			<c:forEach var="school" items="${schools }">
+				<a href="details.do?schoolId=${school.id}">${school.name}</a> <br>
+			</c:forEach>		
+		</c:when>
+		<c:when test="${not empty students}">
+			<c:forEach var="student" items="${students }">
+				<a href="details.do?studentId=${student.id}">${student.firstName} ${student.lastName}</a><br>
+			</c:forEach>		
+		</c:when>
+		<c:otherwise>
+			No Results Found.
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>

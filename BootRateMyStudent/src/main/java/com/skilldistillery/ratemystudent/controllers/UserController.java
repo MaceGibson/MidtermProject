@@ -40,8 +40,8 @@ public class UserController {
 		return "searchResults";
 	}
 
-	@GetMapping(path = "details.do", params = "id")
-	private String showStudent(@RequestParam("id") int id, Model model) {
+	@GetMapping(path = "details.do", params = "studentId")
+	private String showStudent(@RequestParam("studentId") int id, Model model) {
 		Student student = userDAO.findByStudentId(id);
 		if (student != null) {
 			model.addAttribute("student", student);
@@ -49,8 +49,8 @@ public class UserController {
 		}
 		return "home";
 	}
-	@GetMapping(path = "details.do", params = "id")
-	private String showSchool(@RequestParam("id") int id, Model model) {
+	@GetMapping(path = "details.do", params = "schoolId")
+	private String showSchool(@RequestParam("schoolId") int id, Model model) {
 		School school = userDAO.findBySchoolId(id);
 		if (school != null) {
 			model.addAttribute("school", school);
