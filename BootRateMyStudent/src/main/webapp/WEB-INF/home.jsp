@@ -9,5 +9,7 @@
 <body>
 	${testUser}
 	Hello World
+	<label>
+	</label>
 </body>
 </html>
