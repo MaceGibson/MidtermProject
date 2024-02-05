@@ -27,4 +27,6 @@ public interface UserDAO {
 	Review updateReview(int id, Review review);
 	boolean deleteComment(int id);
 	boolean deleteReview(int id);
+
+	User findByUserId(int id);
 }

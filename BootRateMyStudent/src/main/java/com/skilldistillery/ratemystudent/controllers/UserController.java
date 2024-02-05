@@ -17,6 +17,8 @@ import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.User;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 
@@ -84,9 +86,14 @@ public class UserController {
 	}
 	
 	@PostMapping("createReview.do")
-	public String createReview(Review review) {
+	public String createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId, Review review, Model model, HttpSession session) {
+		Student s = userDAO.findByStudentId(studentId);
+		User u = userDAO.findByUserId(userId);
+		review.setStudent(s);
+		review.setUser(u);
 		userDAO.createReview(review);
-		return "redirect:/details";
+		model.addAttribute("student", s);
+		return "details";
 	}
 
 }

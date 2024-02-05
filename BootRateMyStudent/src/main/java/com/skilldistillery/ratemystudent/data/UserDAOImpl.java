@@ -46,6 +46,11 @@ public class UserDAOImpl implements UserDAO {
 	public Student findByStudentId(int id) {
 		return em.find(Student.class, id);
 	}
+	
+	@Override
+	public User findByUserId(int id) {
+		return em.find(User.class, id);
+	}
 
 	@Override
 	public School findBySchoolId(int id) {
