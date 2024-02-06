@@ -122,8 +122,9 @@ public class UserController {
 		Comment comment = userDAO.findCommentById(commentId);
 		if (comment != null) {
 			comment.setCommentText(commentText);
-			userDAO.updateComment(commentId, comment);
-			model.addAttribute("comment", comment);
+			Comment insertedComment = userDAO.updateComment(commentId, comment);
+			model.addAttribute("student", insertedComment.getReview().getStudent());
+			
 			return "details";
 		}
 		return "home";
@@ -140,27 +141,32 @@ public class UserController {
 	}
 
 	@PostMapping("updateReview.do")
-	public String updateReview(Review updatedReview, @RequestParam("subjectId") int subjectId) {
-		userDAO.updateReview(updatedReview, subjectId);
+	public String updateReview(Review updatedReview, @RequestParam("subjectId") int subjectId, Model model) {
+		Review insertedReview = userDAO.updateReview(updatedReview, subjectId);
+		model.addAttribute("student", insertedReview.getStudent());
 			return "details";
 	}
 
-	@PostMapping("deleteComment.do")
-	public String deleteComment(@RequestParam("commentId") int commentId, Model model) {
+	@GetMapping("deleteComment.do")
+	public String deleteComment(@RequestParam("id") int commentId, Model model) {
+		Comment insertedComment = userDAO.findCommentById(commentId);
 		boolean deleted = userDAO.deleteComment(commentId);
 		if (deleted) {
-			return "redirect:/home.do";
+			model.addAttribute("student", insertedComment.getReview().getStudent());
+			return "details";
 		} else {
 			model.addAttribute("error", "Failed to delete comment");
 			return "error";
 		}
 	}
 
-	@PostMapping("deleteReview.do")
-	public String deleteReview(@RequestParam("reviewId") int reviewId, Model model) {
+	@GetMapping("deleteReview.do")
+	public String deleteReview(@RequestParam("id") int reviewId, Model model) {
+		Review insertedReview = userDAO.findReviewById(reviewId);
 		boolean deleted = userDAO.deleteReview(reviewId);
 		if (deleted) {
-			return "redirect:/home.do";
+			model.addAttribute("student", insertedReview.getStudent());
+			return "details";
 		} else {
 			model.addAttribute("error", "Failed to delete review");
 			return "error";
