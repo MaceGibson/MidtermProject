@@ -8,6 +8,7 @@
 <title>Details Page</title>
 </head>
 <body>
+	<jsp:include page="nav.jsp"/>
 	<c:if test="${not empty school}">
 		<c:forEach var="student" items="${school.students }">
 			${student.firstName} ${student.lastName} <br>
@@ -20,7 +21,11 @@
 		${student.firstName} ${student.lastName}<br> 
 		${student.school.name}<br>
 		<c:forEach var="review" items="${student.reviews }">
-			${review.reviewText } <br>
+			${review.reviewText } <br> 
+			<c:if test="${review.user == sessionScope.loginUser}">
+				<a href="updateReviewForm.do?id=${review.id}">Update Review</a>
+				<a href="deleteReview.do?id=${review.id}">Delete Review</a><br>
+			</c:if>
 				<c:forEach var="comment" items="${review.comments }">
 					${comment.commentText } <br>
 					<%--
