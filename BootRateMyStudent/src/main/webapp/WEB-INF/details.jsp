@@ -8,7 +8,6 @@
 <title>Details Page</title>
 </head>
 <body>
-<jsp:include page="nav.jsp"/>
 	<c:if test="${not empty school}">
 		<c:forEach var="student" items="${school.students }">
 			${student.firstName} ${student.lastName} <br>
@@ -30,7 +29,7 @@
 						<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
 						<button type="submit">Submit</button> 
 					</form>
-				</c:forEach> 
+				</c:forEach>
 	<form action="createComment.do" method="POST">
 		<input type="hidden" name="reviewId" value="${review.id}"> 
 		<label for="commentText">Leave a Comment:</label>
