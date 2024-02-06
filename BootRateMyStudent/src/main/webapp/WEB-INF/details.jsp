@@ -23,12 +23,14 @@
 			${review.reviewText } <br>
 				<c:forEach var="comment" items="${review.comments }">
 					${comment.commentText } <br>
+					<%--
 					<form action="createComment.do" method="POST">
 						<input type="hidden" name="reviewId" value="${review.id}"> 
 						<label for="commentText">Leave a Comment:</label>
 						<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
 						<button type="submit">Submit</button> 
 					</form>
+					--%>
 				</c:forEach>
 	<form action="createComment.do" method="POST">
 		<input type="hidden" name="reviewId" value="${review.id}"> 
