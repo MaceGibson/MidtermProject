@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
-import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
@@ -23,8 +22,8 @@ public interface UserDAO {
 	Comment findCommentById(int id);
 	
 	//CRUD
-	void createComment(Comment comment);
-	void createReview(Review review);
+	Comment createComment(Comment comment, int reviewId, int userId);
+	Review createReview(Review review, int studentId, int userId, int subjectId);
 	Comment updateComment(int id, Comment comment);
 	Review updateReview(Review review, int subjectId);
 	boolean deleteComment(int id);

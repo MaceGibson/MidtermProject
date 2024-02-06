@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
-import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
@@ -69,14 +68,26 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void createComment(Comment comment) {
+	public Comment createComment(Comment comment, int reviewId, int userId) {
+		Review r = em.find(Review.class, reviewId);
+		User u = em.find(User.class, userId);
+		comment.setUser(u);
+		comment.setReview(r);
 		em.persist(comment);
+		return comment;
 
 	}
 
 	@Override
-	public void createReview(Review review) {
+	public Review createReview(Review review, int studentId, int userId, int subjectId) {
+		Student s = em.find(Student.class, studentId);
+		User u = em.find(User.class, userId);;
+		Subject sub = em.find(Subject.class, subjectId);
+		review.setStudent(s);
+		review.setUser(u);
+		review.setSubject(sub);
 		em.persist(review);
+		return review;
 
 	}
 

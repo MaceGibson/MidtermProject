@@ -45,6 +45,7 @@
 		<c:when test="${not empty sessionScope.loginUser}">
 			<form action="createComment.do" method="POST">
 				<input type="hidden" name="reviewId" value="${review.id}"> 
+				<input type="hidden" name="userId" value="${sessionScope.loginUser.id}"> 
 				<label for="commentText">Leave a Comment:</label>
 				<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
 				<button type="submit">Submit</button> 

@@ -1,6 +1,5 @@
 package com.skilldistillery.ratemystudent.controllers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.ratemystudent.data.SchoolDAO;
 import com.skilldistillery.ratemystudent.data.UserDAO;
@@ -16,7 +17,6 @@ import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
 import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
-import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
 
 @Controller
@@ -70,20 +70,17 @@ public class UserController {
 	}
 
 	@PostMapping("createComment.do")
-	public String createComment(@RequestParam("reviewId") int reviewId, Comment comment, Model model) {// @RequestParam("commentText")
-																										// String
-																										// commentText)
-																										// {
-//		Comment com = new Comment();
-//		com.setCommentText(commentText);
-//		com.setReview(userDAO.findReviewById(reviewId));
-//        userDAO.createComment(com);
-		Review r = userDAO.findReviewById(reviewId);
-		comment.setReview(r);
-		Student student = userDAO.findByStudentId(r.getStudent().getId());
-		model.addAttribute("student", student);
-		userDAO.createComment(comment);
-
+	public String createComment(@RequestParam("reviewId") int reviewId, @RequestParam("userId") int userId, Comment comment, Model model) {
+		userDAO.createComment(comment, reviewId, userId);
+		return "redirect:commentAdded.do?reviewId=" + reviewId;
+	}
+	
+	@GetMapping(path="commentAdded.do")
+	public String addedComment(@RequestParam("reviewId") int reviewId, Model model) {
+		Review searchedReview = userDAO.findReviewById(reviewId);
+		Student s = userDAO.findByStudentId(searchedReview.getStudent().getId());
+		model.addAttribute("review", searchedReview);
+		model.addAttribute("student", s);
 		return "details";
 	}
 
@@ -93,15 +90,19 @@ public class UserController {
 	}
 
 	@PostMapping("createReview.do")
-	public String createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId, @RequestParam("subjectId") int subjectId, Review review, Model model) {
-		Student s = userDAO.findByStudentId(studentId);
-		User u = userDAO.findByUserId(userId);
-		Subject sub = userDAO.findSubjectById(subjectId);
-		review.setStudent(s);
-		review.setUser(u);
-		review.setSubject(sub);
-		review.setCreatedAt(LocalDateTime.now());
-		userDAO.createReview(review);
+	public ModelAndView createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId, @RequestParam("subjectId") int subjectId, 
+			Review review) {
+		ModelAndView mv = new ModelAndView();
+		Review createdReview = userDAO.createReview(review, studentId, userId, subjectId);
+		mv.setViewName("redirect:reviewAdded.do?reviewId=" + createdReview.getId());
+		return mv;
+	}
+	
+	@GetMapping(path="reviewAdded.do")
+	public String stubCreated(@RequestParam("reviewId") int reviewId, Model model) {
+		Review searchedReview = userDAO.findReviewById(reviewId);
+		Student s = userDAO.findByStudentId(searchedReview.getStudent().getId());
+		model.addAttribute("review", searchedReview);
 		model.addAttribute("student", s);
 		return "details";
 	}
