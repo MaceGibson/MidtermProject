@@ -37,6 +37,10 @@ public class Comment {
 	@Column(name="comment_text")
 	private String commentText;
 	
+	@ManyToOne
+	@JoinColumn(name="teacher_id")
+	private User user;
+	
 
 	public Comment() {
 
@@ -100,6 +104,15 @@ public class Comment {
 
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

@@ -46,7 +46,10 @@ public class User {
 	private Subject subject;
 	
 	@OneToMany(mappedBy="user")
-	private List <Review> reviews;
+	private List<Review> reviews;
+	
+	@OneToMany(mappedBy="user")
+	private List<Comment> comments;
 	
 	public User() {
 		
@@ -140,6 +143,14 @@ public class User {
 		this.reviews = reviews;
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public void addReview(Review review) {
 		if(reviews == null) { reviews = new ArrayList<>();}
 		if(! reviews.contains(review)) {
@@ -156,6 +167,25 @@ public class User {
 		if (reviews != null && reviews.contains(review)) {
 			reviews.remove(review);
 			review.setUser(null);
+		}
+	}
+	
+	public void addComment(Comment comment) {
+		if(comments == null) { comments = new ArrayList<>();}
+		if(!comments.contains(comment)) {
+			comments.add(comment);
+			
+			if(comment.getUser() != null) {
+				comment.getUser().removeComment(comment);
+			}
+			comment.setUser(this);
+		}
+	}
+	
+	public void removeComment(Comment comment) {
+		if(comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.setUser(null);
 		}
 	}
 
