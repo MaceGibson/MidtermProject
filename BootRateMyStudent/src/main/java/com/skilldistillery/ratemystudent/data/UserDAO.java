@@ -28,6 +28,9 @@ public interface UserDAO {
 	Review updateReview(Review review, int subjectId);
 	boolean deleteComment(int id);
 	boolean deleteReview(int id);
+	
+	//student creation
+	Student createStudent(Student student, int schoolId);
 
 	User findByUserId(int id);
 

@@ -8,4 +8,5 @@ public interface SchoolDAO {
 
 	List<School> searchByschool (String keyword);
 	School findBySchoolId(int id);
+	School createSchool(School school);
 }

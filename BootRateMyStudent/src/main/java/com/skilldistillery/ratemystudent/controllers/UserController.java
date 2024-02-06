@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.ratemystudent.data.SchoolDAO;
@@ -18,10 +19,10 @@ public class UserController {
 
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired
 	private SchoolDAO schoolDAO;
-	
+
 	@GetMapping(path = "searchSchoolResults.do")
 	public String searchSchoolRequest(@RequestParam("school") String school, Model model) {
 		List<School> schools = schoolDAO.searchByschool(school);
@@ -34,6 +35,7 @@ public class UserController {
 		List<Student> students = userDAO.searchByStudent(student);
 		model.addAttribute("students", students);
 		return "searchResults";
+
 	}
 
 	@GetMapping(path = "details.do", params = "studentId")

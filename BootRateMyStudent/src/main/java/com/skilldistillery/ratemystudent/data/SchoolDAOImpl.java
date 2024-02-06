@@ -12,19 +12,25 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class SchoolDAOImpl implements SchoolDAO{
+public class SchoolDAOImpl implements SchoolDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public List<School> searchByschool(String keyword) {
 		String jpql = "SELECT s FROM School s WHERE s.name LIKE :keyword";
 		return em.createQuery(jpql, School.class).setParameter("keyword", "%" + keyword + "%").getResultList();
 	}
-	
+
 	@Override
 	public School findBySchoolId(int id) {
 		return em.find(School.class, id);
+	}
+
+	@Override
+	public School createSchool(School school) {
+		em.persist(school);
+		return school;
 	}
 }
