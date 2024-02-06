@@ -101,7 +101,6 @@ public class UserController {
 	}
 
 	@GetMapping("updateCommentForm.do")
-<<<<<<< HEAD
 	public String updateCommentForm(@RequestParam("id") int id, Model model) {
 		Comment comment = userDAO.findCommentById(id);
 		if (comment != null) {
@@ -109,10 +108,6 @@ public class UserController {
 			return "updateCommentForm";
 		}
 		return "home";
-=======
-	public String updateCommentForm() {
-		return "updateCommentForm.do";
->>>>>>> 82290cbe703974c441cb4fbd00680d9f550acaae
 	}
 
 	@PostMapping("updateComment.do")
@@ -127,19 +122,16 @@ public class UserController {
 		}
 		return "home";
 	}
-<<<<<<< HEAD
-	
+
 	@GetMapping("updateReviewForm.do")
 	public String updateReviewForm(@RequestParam("id") int id, Model model) {
 		Review review = userDAO.findReviewById(id);
-		if(review != null) {
+		if (review != null) {
 			model.addAttribute("review", review);
 			return "updateReviewForm";
 		}
 		return "home";
 	}
-=======
->>>>>>> 82290cbe703974c441cb4fbd00680d9f550acaae
 
 	@PostMapping("updateReview.do")
 	public String updateReview(@RequestParam("reviewId") int reviewId, @RequestParam("reviewText") String reviewText,
