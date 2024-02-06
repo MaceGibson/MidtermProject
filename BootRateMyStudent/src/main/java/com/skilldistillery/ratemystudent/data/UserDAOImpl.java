@@ -82,7 +82,11 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public Comment updateComment(int id, Comment comment) {
-		return em.merge(comment);
+		Comment managedComment = em.find(Comment.class, id);
+		if(managedComment != null) {
+			managedComment.setCommentText(comment.getCommentText());
+		}
+		return managedComment;
 	}
 
 	@Override
