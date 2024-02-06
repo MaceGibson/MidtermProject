@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,11 +33,16 @@ public class Comment {
 	@OneToMany(mappedBy="inReplyTo")
 	private List<Comment> comments;
 
+	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	
 	@Column(name="comment_text")
 	private String commentText;
+	
+	@ManyToOne
+	@JoinColumn(name="teacher_id")
+	private User user;
 	
 
 	public Comment() {
@@ -100,6 +107,15 @@ public class Comment {
 
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
