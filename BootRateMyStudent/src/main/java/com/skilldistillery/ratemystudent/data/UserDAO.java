@@ -19,6 +19,7 @@ public interface UserDAO {
 	User getUserByUserNameAndPassword(String username, String password);
 	
 	Review findReviewById(int id);
+	Comment findCommentById(int id);
 	
 	//CRUD
 	void createComment(Comment comment);

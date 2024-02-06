@@ -116,4 +116,9 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
+	@Override
+	public Comment findCommentById(int id) {
+		return em.find(Comment.class, id);
+	}
+
 }
