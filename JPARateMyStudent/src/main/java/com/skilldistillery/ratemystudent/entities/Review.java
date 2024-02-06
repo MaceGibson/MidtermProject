@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +46,7 @@ public class Review {
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
 
+	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
@@ -197,8 +200,7 @@ public class Review {
 	@Override
 	public String toString() {
 		return "Review [id=" + id + ", title=" + title + ", reviewText=" + reviewText + ", user=" + user + ", student="
-				+ student + ", rating=" + rating + ", subject=" + subject + ", createdAt=" + createdAt + ", num badges="
-				+ badges.size() + ", num comments=" + comments.size() + "]";
+				+ student + ", rating=" + rating + ", subject=" + subject + ", createdAt=" + createdAt + "]";
 	}
 
 	

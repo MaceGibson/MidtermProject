@@ -23,7 +23,7 @@
 		<c:forEach var="review" items="${student.reviews }">
 			${review.reviewText } <br> 
 			<c:if test="${review.user == sessionScope.loginUser}">
-				<a href="reviewForm.do?id=${review.id}">Update Review</a>
+				<a href="updateReviewForm.do?id=${review.id}">Update Review</a>
 				<a href="deleteReview.do?id=${review.id}">Delete Review</a><br>
 			</c:if>
 				<c:forEach var="comment" items="${review.comments }">
@@ -61,8 +61,8 @@
 					<input type="text" name="title" style= "height:10px; width:200px;">
 					<label for="reviewText">Write a Review:</label>
 					<input type="text" name="reviewText" style= "height:50px; width:200px;" placeholder="write a review">
-					<label for="subject">Subject: </label> 
-					<select name="subject" value="${review.subject}" required>
+					<label for="subjectId">Subject: </label> 
+					<select name="subjectId" value="${review.subject.id}" required>
 						<option value=1>Math</option>
 						<option value=2>English</option>
 						<option value=3>History</option>
@@ -78,6 +78,7 @@
 						<option value=4>****</option>
 						<option value=5>*****</option>
 					</select> 
+					<button type="submit">Submit</button> 
 				</form>
 			 </c:when>
 		</c:choose>

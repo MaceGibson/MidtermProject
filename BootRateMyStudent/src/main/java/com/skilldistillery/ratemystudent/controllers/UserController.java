@@ -1,5 +1,6 @@
 package com.skilldistillery.ratemystudent.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +10,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.skilldistillery.ratemystudent.data.SchoolDAO;
 import com.skilldistillery.ratemystudent.data.UserDAO;
 import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
 import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
+import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private SchoolDAO schoolDAO;
 
 	@GetMapping(path = { "/", "home.do" })
 	public String home(Model model) {
@@ -33,7 +37,7 @@ public class UserController {
 
 	@GetMapping(path = "searchSchoolResults.do")
 	public String searchSchoolRequest(@RequestParam("school") String school, Model model) {
-		List<School> schools = userDAO.searchByschool(school);
+		List<School> schools = schoolDAO.searchByschool(school);
 		model.addAttribute("schools", schools);
 		return "searchResults";
 	}
@@ -57,7 +61,7 @@ public class UserController {
 
 	@GetMapping(path = "details.do", params = "schoolId")
 	private String showSchool(@RequestParam("schoolId") int id, Model model) {
-		School school = userDAO.findBySchoolId(id);
+		School school = schoolDAO.findBySchoolId(id);
 		if (school != null) {
 			model.addAttribute("school", school);
 			return "details";
@@ -89,12 +93,14 @@ public class UserController {
 	}
 
 	@PostMapping("createReview.do")
-	public String createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId,
-			Review review, Model model, HttpSession session) {
+	public String createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId, @RequestParam("subjectId") int subjectId, Review review, Model model) {
 		Student s = userDAO.findByStudentId(studentId);
 		User u = userDAO.findByUserId(userId);
+		Subject sub = userDAO.findSubjectById(subjectId);
 		review.setStudent(s);
 		review.setUser(u);
+		review.setSubject(sub);
+		review.setCreatedAt(LocalDateTime.now());
 		userDAO.createReview(review);
 		model.addAttribute("student", s);
 		return "details";
@@ -134,16 +140,9 @@ public class UserController {
 	}
 
 	@PostMapping("updateReview.do")
-	public String updateReview(@RequestParam("reviewId") int reviewId, @RequestParam("reviewText") String reviewText,
-			Model model) {
-		Review review = userDAO.findReviewById(reviewId);
-		if (review != null) {
-			review.setReviewText(reviewText);
-			userDAO.updateReview(reviewId, review);
-			model.addAttribute("review", review);
+	public String updateReview(Review updatedReview, @RequestParam("subjectId") int subjectId) {
+		userDAO.updateReview(updatedReview, subjectId);
 			return "details";
-		}
-		return "home";
 	}
 
 	@PostMapping("deleteComment.do")
