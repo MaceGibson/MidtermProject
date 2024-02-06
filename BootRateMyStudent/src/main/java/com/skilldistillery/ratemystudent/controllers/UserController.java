@@ -101,8 +101,13 @@ public class UserController {
 	}
 
 	@GetMapping("updateCommentForm.do")
-	public String updateCommentForm() {
-		return "updateCommentForm.do";
+	public String updateCommentForm(@RequestParam("id") int id, Model model) {
+		Comment comment = userDAO.findCommentById(id);
+		if (comment != null) {
+			model.addAttribute("comment", comment);
+			return "updateCommentForm";
+		}
+		return "home";
 	}
 
 	@PostMapping("updateComment.do")
@@ -114,6 +119,16 @@ public class UserController {
 			userDAO.updateComment(commentId, comment);
 			model.addAttribute("comment", comment);
 			return "details";
+		}
+		return "home";
+	}
+	
+	@GetMapping("updateReviewForm.do")
+	public String updateReviewForm(@RequestParam("id") int id, Model model) {
+		Review review = userDAO.findReviewById(id);
+		if(review != null) {
+			model.addAttribute("review", review);
+			return "updateReviewForm";
 		}
 		return "home";
 	}
