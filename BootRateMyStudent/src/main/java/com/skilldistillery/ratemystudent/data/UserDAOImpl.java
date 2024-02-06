@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
-import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
+import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
 
 import jakarta.persistence.EntityManager;
@@ -30,11 +30,7 @@ public class UserDAOImpl implements UserDAO {
 		return u;
 	}
 
-	@Override
-	public List<School> searchByschool(String keyword) {
-		String jpql = "SELECT s FROM School s WHERE s.name LIKE :keyword";
-		return em.createQuery(jpql, School.class).setParameter("keyword", "%" + keyword + "%").getResultList();
-	}
+	
 
 	@Override
 	public List<Student> searchByStudent(String keyword) {
@@ -52,10 +48,7 @@ public class UserDAOImpl implements UserDAO {
 		return em.find(User.class, id);
 	}
 
-	@Override
-	public School findBySchoolId(int id) {
-		return em.find(School.class, id);
-	}
+	
 
 	@Override
 	public Review findReviewById(int id) {
@@ -75,25 +68,49 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void createComment(Comment comment) {
+	public Comment createComment(Comment comment, int reviewId, int userId) {
+		Review r = em.find(Review.class, reviewId);
+		User u = em.find(User.class, userId);
+		comment.setUser(u);
+		comment.setReview(r);
 		em.persist(comment);
+		return comment;
 
 	}
 
 	@Override
-	public void createReview(Review review) {
+	public Review createReview(Review review, int studentId, int userId, int subjectId) {
+		Student s = em.find(Student.class, studentId);
+		User u = em.find(User.class, userId);;
+		Subject sub = em.find(Subject.class, subjectId);
+		review.setStudent(s);
+		review.setUser(u);
+		review.setSubject(sub);
 		em.persist(review);
+		return review;
 
 	}
 
 	@Override
 	public Comment updateComment(int id, Comment comment) {
-		return em.merge(comment);
+		Comment managedComment = em.find(Comment.class, id);
+		if(managedComment != null) {
+			managedComment.setCommentText(comment.getCommentText());
+		}
+		return managedComment;
 	}
 
 	@Override
-	public Review updateReview(int id, Review review) {
-		return em.merge(review);
+	public Review updateReview(Review review, int subjectId) {
+		Review managedReview = em.find(Review.class, review.getId());
+		Subject managedSubject = em.find(Subject.class, subjectId);
+		if(managedReview != null) {
+		managedReview.setTitle(review.getTitle());
+		managedReview.setReviewText(review.getReviewText());
+		managedReview.setRating(review.getRating());
+		managedReview.setSubject(managedSubject);
+		}
+		return managedReview;
 	}
 
 	@Override
@@ -119,6 +136,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Comment findCommentById(int id) {
 		return em.find(Comment.class, id);
+	}
+
+	@Override
+	public Subject findSubjectById(int subjectId) {
+		return em.find(Subject.class, subjectId);
 	}
 
 }

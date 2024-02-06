@@ -140,9 +140,11 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `in_reply_to` INT NULL,
   `comment_text` TEXT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `teacher_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Comments_Review1_idx` (`review_id` ASC),
   INDEX `fk_Comments_Comments1_idx` (`in_reply_to` ASC),
+  INDEX `fk_comment_teacher1_idx` (`teacher_id` ASC),
   CONSTRAINT `fk_Comments_Review1`
     FOREIGN KEY (`review_id`)
     REFERENCES `review` (`id`)
@@ -151,6 +153,11 @@ CREATE TABLE IF NOT EXISTS `comment` (
   CONSTRAINT `fk_Comments_Comments1`
     FOREIGN KEY (`in_reply_to`)
     REFERENCES `comment` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_teacher1`
+    FOREIGN KEY (`teacher_id`)
+    REFERENCES `teacher` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -271,9 +278,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`) VALUES (1, 1, NULL, 'This is a comment', NULL);
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`) VALUES (2, 1, 1, 'This is a comment on a comment.', NULL);
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`) VALUES (3, 2, NULL, 'This is another comment', NULL);
+INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (1, 1, NULL, 'This is a comment', NULL, 1);
+INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (2, 1, 1, 'This is a comment on a comment.', NULL, 2);
+INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (3, 2, NULL, 'This is another comment', NULL, 2);
 
 COMMIT;
 
