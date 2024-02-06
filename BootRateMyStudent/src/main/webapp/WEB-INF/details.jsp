@@ -23,11 +23,15 @@
 		<c:forEach var="review" items="${student.reviews }">
 			${review.reviewText } <br> 
 			<c:if test="${review.user == sessionScope.loginUser}">
-				<a href="updateReviewForm.do?id=${review.id}">Update Review</a>
+				<a href="reviewForm.do?id=${review.id}">Update Review</a>
 				<a href="deleteReview.do?id=${review.id}">Delete Review</a><br>
 			</c:if>
 				<c:forEach var="comment" items="${review.comments }">
-					${comment.commentText } <br>
+					${comment.commentText } 
+					<c:if test="${comment.user == sessionScope.loginUser}">
+						<a href="updateCommentForm.do?id=${comment.id}">Update Comment</a>
+						<a href="deleteComment.do?id=${comment.id}">Delete Comment</a><br>
+					</c:if><br>
 					<%--
 					<form action="createComment.do" method="POST">
 						<input type="hidden" name="reviewId" value="${review.id}"> 
