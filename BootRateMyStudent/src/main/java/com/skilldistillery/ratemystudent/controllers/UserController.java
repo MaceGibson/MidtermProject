@@ -39,7 +39,7 @@ public class UserController {
 	}
 
 	@GetMapping(path = "details.do", params = "studentId")
-	private String showStudent(@RequestParam("studentId") int id, Model model) {
+	public String showStudent(@RequestParam("studentId") int id, Model model) {
 		Student student = userDAO.findByStudentId(id);
 		if (student != null) {
 			model.addAttribute("student", student);
@@ -49,12 +49,35 @@ public class UserController {
 	}
 
 	@GetMapping(path = "details.do", params = "schoolId")
-	private String showSchool(@RequestParam("schoolId") int id, Model model) {
+	public String showSchool(@RequestParam("schoolId") int id, Model model) {
 		School school = schoolDAO.findBySchoolId(id);
 		if (school != null) {
 			model.addAttribute("school", school);
 			return "details";
 		}
 		return "home";
+	}
+	
+	@GetMapping("createStudent.do")
+	public String createStudent() {
+		return "createStudent";
+	}
+	
+	@PostMapping("addedStudent.do")
+	public String addedStudent(Student student, @RequestParam("schoolName") String schoolName, Model model) {
+		List <School> resultSchools = schoolDAO.searchByschool(schoolName);
+		Student newStudent = null;
+		int schoolId = 0;
+		for (School school : resultSchools) {
+			if(school.getName().equals(schoolName)) {
+				schoolId = school.getId();
+				newStudent = schoolDAO.createStudent(student, schoolId);
+			}
+		} if (schoolId == 0) {
+			School newSchool = schoolDAO.createSchool(schoolName);
+			newStudent = schoolDAO.createStudent(student, newSchool.getId());
+		}
+		model.addAttribute("student", newStudent);
+		return "details";
 	}
 }

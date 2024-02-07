@@ -76,14 +76,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Student createStudent(Student student, int schoolId) {
-		School managedSchool = em.find(School.class, schoolId);
-		student.setSchool(managedSchool);
-		em.persist(student);
-		return student;
-	}
-
-	@Override
 	public Review createReview(Review review, int studentId, int userId, int subjectId) {
 		Student s = em.find(Student.class, studentId);
 		User u = em.find(User.class, userId);

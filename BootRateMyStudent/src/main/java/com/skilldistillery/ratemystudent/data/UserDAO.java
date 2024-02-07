@@ -29,8 +29,6 @@ public interface UserDAO {
 	boolean deleteComment(int id);
 	boolean deleteReview(int id);
 	
-	//student creation
-	Student createStudent(Student student, int schoolId);
 
 	User findByUserId(int id);
 

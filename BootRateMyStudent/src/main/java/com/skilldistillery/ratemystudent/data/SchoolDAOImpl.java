@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.ratemystudent.entities.School;
+import com.skilldistillery.ratemystudent.entities.Student;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -29,8 +30,18 @@ public class SchoolDAOImpl implements SchoolDAO {
 	}
 
 	@Override
-	public School createSchool(School school) {
+	public School createSchool(String schoolName) {
+		School school = new School();
+		school.setName(schoolName);
 		em.persist(school);
 		return school;
+	}
+	
+	@Override
+	public Student createStudent(Student student, int schoolId) {
+		School managedSchool = em.find(School.class, schoolId);
+		student.setSchool(managedSchool);
+		em.persist(student);
+		return student;
 	}
 }
