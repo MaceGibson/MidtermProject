@@ -2,9 +2,11 @@ package com.skilldistillery.ratemystudent.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.ratemystudent.data.UserDAO;
@@ -38,12 +40,23 @@ public class LoginController {
 			return "login";
 		}
 	}
-	
-	@RequestMapping(path="logout.do")
+
+	@RequestMapping(path = "logout.do")
 	public ModelAndView doLogout(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		session.removeAttribute("loginUser");
 		mv.setViewName("home");
 		return mv;
 	}
+
+	@PostMapping("registerUser.do")
+	public String addedUser(User user, @RequestParam("subjectId") int subjectId, @RequestParam("schoolId") int schoolId,
+			@RequestParam("confirmPassword") String confirmPw) {
+		if (user.getPassword().equals(confirmPw)) {
+			User newUser = userDAO.createUser(user, schoolId, subjectId);
+			return "login";
+		}
+		return "registration";
+	}
+
 }

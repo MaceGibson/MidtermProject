@@ -143,20 +143,38 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User updateUser(User user, int schoolId, int subjectId) {
 		User managedUser = em.find(User.class, user.getId());
-		if(managedUser != null) {
+		if (managedUser != null) {
 			managedUser.setUsername(user.getUsername());
-			//managedUser.setPassword(user.getPassword());
+			// managedUser.setPassword(user.getPassword());
 			managedUser.setFirstName(user.getFirstName());
 			managedUser.setLastName(user.getLastName());
 			managedUser.setEmail(user.getEmail());
-			
+
 			School managedSchool = em.find(School.class, schoolId);
 			managedUser.setSchool(managedSchool);
-			
+
 			Subject managedSubject = em.find(Subject.class, subjectId);
 			managedUser.setSubject(managedSubject);
 		}
 		return managedUser;
+	}
+
+	@Override
+	public User createUser(User user, int schoolId, int subjectId) {
+		User managedUser = new User();
+		School userSchool = em.find(School.class, schoolId);
+		Subject userSubject = em.find(Subject.class, subjectId);
+		
+		managedUser.setUsername(user.getUsername());
+		// managedUser.setPassword(user.getPassword());
+		managedUser.setFirstName(user.getFirstName());
+		managedUser.setLastName(user.getLastName());
+		managedUser.setEmail(user.getEmail());
+		managedUser.setSchool(userSchool);
+		managedUser.setSubject(userSubject);
+		em.persist(managedUser);
+		return managedUser;
+
 	}
 
 }

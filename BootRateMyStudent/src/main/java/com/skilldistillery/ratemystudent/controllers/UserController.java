@@ -80,16 +80,17 @@ public class UserController {
 		model.addAttribute("student", s);
 		return "details";
 	}
-	
+
 	@GetMapping("updateAccount.do")
 	public String updateAccountDetails(Model model) {
 		List<School> schools = schoolDAO.searchByschool("");
 		model.addAttribute("schools", schools);
 		return "accountUpdate";
 	}
-	
+
 	@PostMapping("updateUser.do")
-	public String updateUserDetails(User user,@RequestParam("schoolId") int schoolId, @RequestParam("subjectId") int subjectId, Model model, HttpSession session) {
+	public String updateUserDetails(User user, @RequestParam("schoolId") int schoolId,
+			@RequestParam("subjectId") int subjectId, Model model, HttpSession session) {
 		User updatedUser = userDAO.updateUser(user, schoolId, subjectId);
 		User daoUser = userDAO.getUserByUserNameAndPassword(updatedUser.getUsername(), updatedUser.getPassword());
 		if (daoUser != null) {
@@ -99,7 +100,7 @@ public class UserController {
 			return "login";
 		}
 	}
-	
+
 	@PostMapping("createSchool.do")
 	public String createSchool(@RequestParam("schoolName") String schoolName) {
 		schoolDAO.createSchool(schoolName);
