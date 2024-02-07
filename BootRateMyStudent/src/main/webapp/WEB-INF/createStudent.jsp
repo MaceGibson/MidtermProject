@@ -18,8 +18,6 @@
 		<input type="text" name="lastName">
 		<label for="graduationYear">Year Student Graduates:</label>
 		<input type="text" name="graduationYear">
-		<label for="schoolName">Name of School:</label>
-		<input type="text" name="schoolName">
 		<button type="submit">Submit</button> 
 	</form>
 	</c:if>

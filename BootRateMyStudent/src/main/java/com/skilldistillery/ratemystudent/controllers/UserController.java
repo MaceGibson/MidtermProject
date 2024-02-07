@@ -57,27 +57,24 @@ public class UserController {
 		}
 		return "home";
 	}
-	
+
 	@GetMapping("createStudent.do")
 	public String createStudent() {
 		return "createStudent";
 	}
-	
+
 	@PostMapping("addedStudent.do")
-	public String addedStudent(Student student, @RequestParam("schoolName") String schoolName, Model model) {
-		List <School> resultSchools = schoolDAO.searchByschool(schoolName);
+	public String addedStudent(Student student, @RequestParam("userId") int userId, Model model) {
 		Student newStudent = null;
-		int schoolId = 0;
-		for (School school : resultSchools) {
-			if(school.getName().equals(schoolName)) {
-				schoolId = school.getId();
-				newStudent = schoolDAO.createStudent(student, schoolId);
-			}
-		} if (schoolId == 0) {
-			School newSchool = schoolDAO.createSchool(schoolName);
-			newStudent = schoolDAO.createStudent(student, newSchool.getId());
-		}
-		model.addAttribute("student", newStudent);
+		int userSchoolId = userDAO.findByUserId(userId).getSchool().getId();
+		newStudent = schoolDAO.createStudent(student, userSchoolId);
+		return "redirect:studentAdded.do?studentId=" + newStudent.getId();
+	}
+
+	@GetMapping("studentAdded.do")
+	public String addedStudentDetails(@RequestParam("studentId") int studentId, Model model) {
+		Student s = userDAO.findByStudentId(studentId);
+		model.addAttribute("student", s);
 		return "details";
 	}
 }
