@@ -1,5 +1,7 @@
 package com.skilldistillery.ratemystudent.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.skilldistillery.ratemystudent.data.SchoolDAO;
 import com.skilldistillery.ratemystudent.data.UserDAO;
+import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +23,9 @@ public class LoginController {
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired 
+	private SchoolDAO schoolDAO;
 
 	@GetMapping("login.do")
 	public String login(HttpSession session) {
@@ -33,7 +40,7 @@ public class LoginController {
 	public String loginPost(User user, HttpSession session) {
 		User daoUser = userDAO.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
 
-		if (daoUser != null) {
+		if (daoUser != null && daoUser.isEnabled()) {
 			session.setAttribute("loginUser", daoUser);
 			return "account";
 		} else {
@@ -50,7 +57,9 @@ public class LoginController {
 	}
 	
 	@GetMapping("register.do")
-	public String registration() {
+	public String registration(Model model) {
+		List<School> schools = schoolDAO.searchByschool("");
+		model.addAttribute("schools", schools);
 		return "registration";
 	}
 

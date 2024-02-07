@@ -32,8 +32,10 @@ public interface UserDAO {
 	User updateUser(User user, int schoolId, int subjectId);
 	User createUser(User user, int schoolId, int subjectId);
 	
-
 	User findByUserId(int id);
 
 	Subject findSubjectById(int subjectId);
+	void updateUserPw(User user);
+	void toggleEnabled(User user);
+	List<User> findAllUsers(String keyword);
 }
