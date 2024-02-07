@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   `password` VARCHAR(200) NOT NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `role` VARCHAR(45) NOT NULL DEFAULT 'user',
-  `school_id` INT NOT NULL,
+  `school_id` INT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NULL,
   `email` VARCHAR(100) NOT NULL,
