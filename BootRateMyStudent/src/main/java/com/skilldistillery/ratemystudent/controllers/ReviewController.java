@@ -46,11 +46,6 @@ public class ReviewController {
 		return "details";
 	}
 
-	@GetMapping("reviewForm.do")
-	public String reviewForm() {
-		return "reviewForm";
-	}
-
 	@PostMapping("createReview.do")
 	public ModelAndView createReview(@RequestParam("studentId") int studentId, @RequestParam("userId") int userId, @RequestParam("subjectId") int subjectId, 
 			Review review) {

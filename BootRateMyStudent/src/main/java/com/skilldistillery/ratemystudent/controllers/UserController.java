@@ -106,4 +106,9 @@ public class UserController {
 		schoolDAO.createSchool(schoolName);
 		return "redirect:updateAccount.do";
 	}
+	
+	@GetMapping("reviewHistory.do")
+	public String viewReviewHistory() {
+		return "reviewHistory";
+	}
 }

@@ -23,9 +23,7 @@
 		<h2>School: <c:out value="${sessionScope.loginUser.school.name}"/></h2>
 		<h2>Subject: <c:out value="${sessionScope.loginUser.subject.name}"/></h2>
 		<a href="updateAccount.do">Update Account Information</a> <br>
-		<c:forEach var="review" items="${sessionScope.loginUser.reviews }">
-			<p><a href="details.do?studentId=${review.student.id}"><br>${review.title}</a></p>
-		</c:forEach>		
+		<a href="reviewHistory.do">Review History</a> <br>
 	</c:when>
 	<c:otherwise>
 		<h2>Not Logged In</h2>

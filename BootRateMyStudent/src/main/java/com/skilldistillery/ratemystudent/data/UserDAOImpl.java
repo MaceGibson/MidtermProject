@@ -59,6 +59,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			user = em.createQuery(jpql, User.class).setParameter("username", username)
 					.setParameter("password", password).getSingleResult();
+			user.getReviews().size();
 		} catch (NoResultException e) {
 		}
 		return user;
