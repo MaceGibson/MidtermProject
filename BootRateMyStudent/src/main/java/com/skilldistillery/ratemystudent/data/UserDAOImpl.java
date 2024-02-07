@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.ratemystudent.entities.Comment;
 import com.skilldistillery.ratemystudent.entities.Review;
+import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
 import com.skilldistillery.ratemystudent.entities.Subject;
 import com.skilldistillery.ratemystudent.entities.User;
@@ -30,8 +31,6 @@ public class UserDAOImpl implements UserDAO {
 		return u;
 	}
 
-	
-
 	@Override
 	public List<Student> searchByStudent(String keyword) {
 		String jpql = "SELECT s FROM Student s WHERE s.firstName LIKE :keyword OR s.lastName LIKE :keyword";
@@ -42,13 +41,11 @@ public class UserDAOImpl implements UserDAO {
 	public Student findByStudentId(int id) {
 		return em.find(Student.class, id);
 	}
-	
+
 	@Override
 	public User findByUserId(int id) {
 		return em.find(User.class, id);
 	}
-
-	
 
 	@Override
 	public Review findReviewById(int id) {
@@ -81,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Review createReview(Review review, int studentId, int userId, int subjectId) {
 		Student s = em.find(Student.class, studentId);
-		User u = em.find(User.class, userId);;
+		User u = em.find(User.class, userId);
 		Subject sub = em.find(Subject.class, subjectId);
 		review.setStudent(s);
 		review.setUser(u);
@@ -94,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Comment updateComment(int id, Comment comment) {
 		Comment managedComment = em.find(Comment.class, id);
-		if(managedComment != null) {
+		if (managedComment != null) {
 			managedComment.setCommentText(comment.getCommentText());
 		}
 		return managedComment;
@@ -104,11 +101,11 @@ public class UserDAOImpl implements UserDAO {
 	public Review updateReview(Review review, int subjectId) {
 		Review managedReview = em.find(Review.class, review.getId());
 		Subject managedSubject = em.find(Subject.class, subjectId);
-		if(managedReview != null) {
-		managedReview.setTitle(review.getTitle());
-		managedReview.setReviewText(review.getReviewText());
-		managedReview.setRating(review.getRating());
-		managedReview.setSubject(managedSubject);
+		if (managedReview != null) {
+			managedReview.setTitle(review.getTitle());
+			managedReview.setReviewText(review.getReviewText());
+			managedReview.setRating(review.getRating());
+			managedReview.setSubject(managedSubject);
 		}
 		return managedReview;
 	}
@@ -141,6 +138,25 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Subject findSubjectById(int subjectId) {
 		return em.find(Subject.class, subjectId);
+	}
+
+	@Override
+	public User updateUser(User user, int schoolId, int subjectId) {
+		User managedUser = em.find(User.class, user.getId());
+		if(managedUser != null) {
+			managedUser.setUsername(user.getUsername());
+			//managedUser.setPassword(user.getPassword());
+			managedUser.setFirstName(user.getFirstName());
+			managedUser.setLastName(user.getLastName());
+			managedUser.setEmail(user.getEmail());
+			
+			School managedSchool = em.find(School.class, schoolId);
+			managedUser.setSchool(managedSchool);
+			
+			Subject managedSubject = em.find(Subject.class, subjectId);
+			managedUser.setSubject(managedSubject);
+		}
+		return managedUser;
 	}
 
 }

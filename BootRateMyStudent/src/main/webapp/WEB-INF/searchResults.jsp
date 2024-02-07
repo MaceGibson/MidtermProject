@@ -8,6 +8,7 @@
 <title>Search Results</title>
 </head>
 <body>
+<jsp:include page="nav.jsp"/>
 	Search Results Page <br>
 	<c:choose>
 		<c:when test="${not empty schools}">
@@ -24,5 +25,8 @@
 			No Results Found.
 		</c:otherwise>
 	</c:choose>
+		<c:if test="${students != null && not empty sessionScope.loginUser}">
+			<a href="createStudent.do">Add a Student</a> <br>
+		</c:if>
 </body>
 </html>
