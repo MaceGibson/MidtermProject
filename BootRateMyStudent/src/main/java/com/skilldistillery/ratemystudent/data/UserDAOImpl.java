@@ -179,5 +179,26 @@ public class UserDAOImpl implements UserDAO {
 		return managedUser;
 
 	}
+	
+	@Override
+	public List<User> findAllUsers(String keyword) {
+		String jpql = "SELECT u FROM User u WHERE u.firstName LIKE :keyword";
+		return em.createQuery(jpql, User.class).setParameter("keyword", "%" + keyword + "%").getResultList();
+	}
+	
+	@Override
+	public void updateUserPw(User user) {
+		User managedUser = em.find(User.class, user.getId());
+		managedUser.setPassword(user.getPassword());
+		em.persist(managedUser);
+	}
+	
+	@Override
+	public void toggleEnabled(User user) {
+		User managedUser = em.find(User.class, user.getId());
+		managedUser.setEnabled(user.isEnabled());;
+		em.persist(managedUser);
+		System.out.println("**************************************************************************************** in DAO");
+	}
 
 }

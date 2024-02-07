@@ -106,9 +106,30 @@ public class UserController {
 		schoolDAO.createSchool(schoolName);
 		return "redirect:updateAccount.do";
 	}
-	
+
 	@GetMapping("reviewHistory.do")
 	public String viewReviewHistory() {
 		return "reviewHistory";
+	}
+	
+	@GetMapping("userList.do")
+	public String searchUsers(@RequestParam("keyword") String keyword, Model model) {
+		List<User> users = userDAO.findAllUsers(keyword);
+		model.addAttribute("users", users);
+		model.addAttribute("keyword", keyword);
+		return "userList";
+	}
+
+	@PostMapping("updateUserList.do")
+	public String updateUsers(User user, @RequestParam("keyword")String keyword, Model model) {
+		User localUser = userDAO.findByUserId(user.getId());
+		if (!localUser.getPassword().equals(user.getPassword()) && user.getPassword()!= null) {
+			userDAO.updateUserPw(user);
+		}
+		if (localUser.isEnabled() != user.isEnabled() && user.getPassword() == null) {
+			userDAO.toggleEnabled(user);
+		}
+		model.addAttribute("keyword", keyword);
+		return "redirect:userList.do?keyword=" + keyword;
 	}
 }

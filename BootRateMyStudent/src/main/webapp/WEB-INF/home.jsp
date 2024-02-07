@@ -19,5 +19,12 @@
 		<input type="text" name="student"><br>
 		<button type="submit">Submit</button>
 	</form>
+	<c:if test="${sessionScope.loginUser.role eq 'admin'}">
+	<form action="userList.do" method="GET">
+		<label for="keyword">Search By User</label><br>
+		<input type="text" name="keyword"><br>
+		<button type="submit">Submit</button>
+	</form>
+	</c:if>
 </body>
 </html>
