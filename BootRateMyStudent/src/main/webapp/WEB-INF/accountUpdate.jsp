@@ -14,12 +14,15 @@
 	<c:choose>
 	<c:when test="${not empty sessionScope.loginUser}">
 		<form action="updateUser.do" method="POST">
+			<input type="hidden" name="id" value="${sessionScope.loginUser.id}">
 			<label for="username">Username:</label>
-			<input type="text" name="username" placeholder="<c:out value="${sessionScope.loginUser.username}"/>"> <br>
+			<input type="text" name="username" value="<c:out value="${sessionScope.loginUser.username}"/>"> <br>
 			<label for="firstName">First Name:</label>
-			<input type="text" name="firstName" placeholder="<c:out value="${sessionScope.loginUser.firstName}"/>"> <br>
+			<input type="text" name="firstName" value="<c:out value="${sessionScope.loginUser.firstName}"/>"> <br>
 			<label for="lastName">Last Name:</label>
-			<input type="text" name="lastName" placeholder="<c:out value="${sessionScope.loginUser.lastName}"/>"> <br>
+			<input type="text" name="lastName" value="<c:out value="${sessionScope.loginUser.lastName}"/>"> <br>
+			<label for="email">email:</label>
+			<input type="text" name="email" value="<c:out value="${sessionScope.loginUser.email}"/>"> <br>
 			<label for="school">School:</label>
 			<select name="schoolId" required>
 				<c:forEach var="school" items="${schools}">
@@ -43,8 +46,5 @@
 		<h2>Not Logged In</h2>
 	</c:otherwise>
 </c:choose>
-	<c:if test="${schools != null && not empty sessionScope.loginUser}">
-			<a href="createSchool.do">Add a School</a> <br>
-		</c:if>
 </body>
 </html>
