@@ -19,13 +19,13 @@
 		${student.school.name}<br>
 		<c:forEach var="review" items="${student.reviews }">
 			${review.reviewText } <br> 
-			<c:if test="${review.user == sessionScope.loginUser}">
+			<c:if test="${review.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
 				<a href="updateReviewForm.do?id=${review.id}">Update Review</a>
 				<a href="deleteReview.do?id=${review.id}">Delete Review</a><br>
 			</c:if>
 				<c:forEach var="comment" items="${review.comments }">
 					${comment.commentText } 
-					<c:if test="${comment.user == sessionScope.loginUser}">
+					<c:if test="${comment.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
 						<a href="updateCommentForm.do?id=${comment.id}">Update Comment</a>
 						<a href="deleteComment.do?id=${comment.id}">Delete Comment</a><br>
 					</c:if><br>
