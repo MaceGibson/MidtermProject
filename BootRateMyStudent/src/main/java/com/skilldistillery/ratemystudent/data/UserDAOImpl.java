@@ -166,10 +166,11 @@ public class UserDAOImpl implements UserDAO {
 		Subject userSubject = em.find(Subject.class, subjectId);
 		
 		managedUser.setUsername(user.getUsername());
-		// managedUser.setPassword(user.getPassword());
+		managedUser.setPassword(user.getPassword());
 		managedUser.setFirstName(user.getFirstName());
 		managedUser.setLastName(user.getLastName());
 		managedUser.setEmail(user.getEmail());
+		managedUser.setRole(user.getRole());
 		managedUser.setSchool(userSchool);
 		managedUser.setSubject(userSubject);
 		em.persist(managedUser);

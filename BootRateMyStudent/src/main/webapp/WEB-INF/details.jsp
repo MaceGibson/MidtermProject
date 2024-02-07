@@ -11,10 +11,7 @@
 	<jsp:include page="nav.jsp"/>
 	<c:if test="${not empty school}">
 		<c:forEach var="student" items="${school.students }">
-			${student.firstName} ${student.lastName} <br>
-			<c:forEach var="review" items="${student.reviews}">
-			${review.reviewText}<br>
-			</c:forEach>
+		<a href="details.do?studentId=${student.id}">${student.firstName} ${student.lastName}</a><br>
 		</c:forEach>		
 	</c:if>
 	<c:if test="${not empty student}">

@@ -48,12 +48,17 @@ public class LoginController {
 		mv.setViewName("home");
 		return mv;
 	}
+	
+	@GetMapping("register.do")
+	public String registration() {
+		return "registration";
+	}
 
 	@PostMapping("registerUser.do")
 	public String addedUser(User user, @RequestParam("subjectId") int subjectId, @RequestParam("schoolId") int schoolId,
 			@RequestParam("confirmPassword") String confirmPw) {
 		if (user.getPassword().equals(confirmPw)) {
-			User newUser = userDAO.createUser(user, schoolId, subjectId);
+			userDAO.createUser(user, schoolId, subjectId);
 			return "login";
 		}
 		return "registration";

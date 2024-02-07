@@ -8,18 +8,24 @@
 <title>Add a student</title>
 </head>
 <body>
-	<c:if test="${not empty sessionScope.loginUser}">
-	<form action="addedStudent.do" method="POST">
-		<input type="hidden" name="studentId" value="${student.id}"> 
-		<input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
-		<label for="firstName">First Name:</label>
-		<input type="text" name="firstName">
-		<label for="lastName">Last Name:</label>
-		<input type="text" name="lastName">
-		<label for="graduationYear">Year Student Graduates:</label>
-		<input type="text" name="graduationYear">
-		<button type="submit">Submit</button> 
-	</form>
-	</c:if>
+<jsp:include page="nav.jsp"/>
+	<c:choose>
+		<c:when test="${not empty sessionScope.loginUser && not empty sessionScope.loginUser.school}">
+		<form action="addedStudent.do" method="POST">
+			<input type="hidden" name="studentId" value="${student.id}"> 
+			<input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
+			<label for="firstName">First Name:</label>
+			<input type="text" name="firstName">
+			<label for="lastName">Last Name:</label>
+			<input type="text" name="lastName">
+			<label for="graduationYear">Year Student Graduates:</label>
+			<input type="text" name="graduationYear">
+			<button type="submit">Submit</button> 
+		</form>
+		</c:when>
+		<c:otherwise>
+			please update your <a href="login.do">account page</a> with a school before adding a student.
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>
