@@ -40,7 +40,7 @@ public class LoginController {
 	public String loginPost(User user, HttpSession session) {
 		User daoUser = userDAO.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
 
-		if (daoUser != null) {
+		if (daoUser != null && daoUser.isEnabled()) {
 			session.setAttribute("loginUser", daoUser);
 			return "account";
 		} else {
