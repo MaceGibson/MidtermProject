@@ -12,8 +12,6 @@
 	</c:when>
 	<c:otherwise>
 		<a href="login.do">Login</a>
-		<br>
-		<a href="register.do">Register</a>
 	</c:otherwise>
 </c:choose>
 </nav>
