@@ -99,4 +99,10 @@ public class UserController {
 			return "login";
 		}
 	}
+	
+	@PostMapping("createSchool.do")
+	public String createSchool(@RequestParam("schoolName") String schoolName) {
+		schoolDAO.createSchool(schoolName);
+		return "redirect:updateAccount.do";
+	}
 }
