@@ -30,6 +30,7 @@ public interface UserDAO {
 	boolean deleteReview(int id);
 	
 	User updateUser(User user, int schoolId, int subjectId);
+	User createUser(User user, int schoolId, int subjectId);
 	
 
 	User findByUserId(int id);
