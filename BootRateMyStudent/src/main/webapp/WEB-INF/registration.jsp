@@ -11,6 +11,7 @@
 		<h2>New User Registration</h2>
 		<form action="registerUser.do" method="POST">
 			<input type="hidden" name="role" value="user">
+			<input type="hidden" name="enabled" value=true>
 			<label for="username">Username:</label>
 	        <input type="text" name="username" required> <br>
 	        <label for="password">Password:</label>

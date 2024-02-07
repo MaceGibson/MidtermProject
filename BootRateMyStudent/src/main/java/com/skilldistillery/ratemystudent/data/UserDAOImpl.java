@@ -172,6 +172,7 @@ public class UserDAOImpl implements UserDAO {
 		managedUser.setLastName(user.getLastName());
 		managedUser.setEmail(user.getEmail());
 		managedUser.setRole(user.getRole());
+		managedUser.setEnabled(user.isEnabled());
 		managedUser.setSchool(userSchool);
 		managedUser.setSubject(userSubject);
 		em.persist(managedUser);
