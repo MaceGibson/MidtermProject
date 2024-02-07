@@ -13,6 +13,9 @@ import com.skilldistillery.ratemystudent.data.SchoolDAO;
 import com.skilldistillery.ratemystudent.data.UserDAO;
 import com.skilldistillery.ratemystudent.entities.School;
 import com.skilldistillery.ratemystudent.entities.Student;
+import com.skilldistillery.ratemystudent.entities.User;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -76,5 +79,24 @@ public class UserController {
 		Student s = userDAO.findByStudentId(studentId);
 		model.addAttribute("student", s);
 		return "details";
+	}
+	
+	@GetMapping("updateAccount.do")
+	public String updateAccountDetails(Model model) {
+		List<School> schools = schoolDAO.searchByschool("");
+		model.addAttribute("schools", schools);
+		return "accountUpdate";
+	}
+	
+	@PostMapping("updateUser.do")
+	public String updateUserDetails(User user,@RequestParam("schoolId") int schoolId, @RequestParam("subjectId") int subjectId, Model model, HttpSession session) {
+		User updatedUser = userDAO.updateUser(user, schoolId, subjectId);
+		User daoUser = userDAO.getUserByUserNameAndPassword(updatedUser.getUsername(), updatedUser.getPassword());
+		if (daoUser != null) {
+			session.setAttribute("loginUser", daoUser);
+			return "account";
+		} else {
+			return "login";
+		}
 	}
 }

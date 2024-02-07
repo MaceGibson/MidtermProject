@@ -25,9 +25,6 @@
 			No Results Found.
 		</c:otherwise>
 	</c:choose>
-		<c:if test="${schools != null && not empty sessionScope.loginUser}">
-			<a href="createSchool.do">Add a School</a> <br>
-		</c:if>
 		<c:if test="${students != null && not empty sessionScope.loginUser}">
 			<a href="createStudent.do">Add a Student</a> <br>
 		</c:if>
