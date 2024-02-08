@@ -274,6 +274,16 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `comment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `RateMyStudentDB`;
+INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (1, 1, NULL, 'Potter\'s talents in Transfiguration are a credit to Gryffindor House. A lionhearted wizard with a knack for transformative magic.', NULL, 5);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `badge`
 -- -----------------------------------------------------
 START TRANSACTION;
