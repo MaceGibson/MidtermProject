@@ -1,87 +1,106 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Details Page</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Details Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="nav.jsp"/>
-	<c:if test="${not empty school}">
-		<c:forEach var="student" items="${school.students }">
-		<a href="details.do?studentId=${student.id}">${student.firstName} ${student.lastName}</a><br>
-		</c:forEach>		
-	</c:if>
-	<c:if test="${not empty student}">
-		${student.firstName} ${student.lastName}<br> 
-		${student.school.name}<br>
-		<c:forEach var="review" items="${student.reviews }">
-			${review.reviewText } <br> 
-			<c:if test="${review.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
-				<a href="updateReviewForm.do?id=${review.id}">Update Review</a>
-				<a href="deleteReview.do?id=${review.id}">Delete Review</a><br>
-			</c:if>
-				<c:forEach var="comment" items="${review.comments }">
-					${comment.commentText } 
-					<c:if test="${comment.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
-						<a href="updateCommentForm.do?id=${comment.id}">Update Comment</a>
-						<a href="deleteComment.do?id=${comment.id}">Delete Comment</a><br>
-					</c:if><br>
-					<%--
-					<form action="createComment.do" method="POST">
-						<input type="hidden" name="reviewId" value="${review.id}"> 
-						<label for="commentText">Leave a Comment:</label>
-						<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
-						<button type="submit">Submit</button> 
-					</form>
-					--%>
-				</c:forEach>
-	<c:choose>
-		<c:when test="${not empty sessionScope.loginUser}">
-			<form action="createComment.do" method="POST">
-				<input type="hidden" name="reviewId" value="${review.id}"> 
-				<input type="hidden" name="userId" value="${sessionScope.loginUser.id}"> 
-				<label for="commentText">Leave a Comment:</label>
-				<input type="text" name="commentText" style= "height:50px; width:200px;" placeholder="write a comment">
-				<button type="submit">Submit</button> 
-			</form>
-		</c:when>
-	</c:choose>
-		</c:forEach>
-		<c:choose>
-			<c:when test="${not empty sessionScope.loginUser}">
-				<form action="createReview.do" method="POST">
-					<input type="hidden" name="studentId" value="${student.id}"> 
-					<input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
-					<label for="title">Title:</label>
-					<input type="text" name="title" style= "height:10px; width:200px;">
-					<label for="reviewText">Write a Review:</label>
-					<input type="text" name="reviewText" style= "height:50px; width:200px;" placeholder="write a review">
-					<label for="subjectId">Subject: </label> 
-					<select name="subjectId" value="${review.subject.id}" required>
-						<option value=1>Math</option>
-						<option value=2>English</option>
-						<option value=3>History</option>
-						<option value=4>Science</option>
-						<option value=5>Computer Science</option>
-						<option value=6>Music</option>
-					</select> 
-					<label for="rating">Rating:</label>
-					<select name="rating" value="${review.rating}" required>
-						<option value=1>*</option>
-						<option value=2>**</option>
-						<option value=3>***</option>
-						<option value=4>****</option>
-						<option value=5>*****</option>
-					</select> 
-					<button type="submit">Submit</button> 
-				</form>
-			 </c:when>
-		</c:choose>
-	</c:if>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <jsp:include page="nav.jsp"/>
+    <div class="container mt-5">
+        <c:if test="${not empty school}">
+            <div class="mb-3">
+                <h3>Students in ${school.name}</h3>
+                <c:forEach var="student" items="${school.students}">
+                    <a href="details.do?studentId=${student.id}" class="btn btn-link">${student.firstName} ${student.lastName}</a><br>
+                </c:forEach>
+            </div>
+        </c:if>
+        <c:if test="${not empty student}">
+            <div class="mb-3">
+                <h3>${student.firstName} ${student.lastName}</h3>
+                <p>${student.school.name}</p>
+            </div>
+            <div class="mb-3">
+                <h4>Reviews</h4>
+                <c:forEach var="review" items="${student.reviews}">
+                    <div class="mb-3 border p-3">
+                    	<h4>${review.title }</h4>
+                        <p>${review.reviewText}</p>
+                        <c:if test="${review.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
+                            <a href="updateReviewForm.do?id=${review.id}" class="btn btn-sm btn-primary">Update Review</a>
+                            <a href="deleteReview.do?id=${review.id}" class="btn btn-sm btn-danger">Delete Review</a>
+                        </c:if>
+                        <br>
+                        <div class="ms-3">
+                            <h5>Comments:</h5>
+                            <c:forEach var="comment" items="${review.comments}">
+                                <p>${comment.commentText}</p>
+                                <c:if test="${comment.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
+                                    <a href="updateCommentForm.do?id=${comment.id}" class="btn btn-sm btn-primary">Update Comment</a>
+                                    <a href="deleteComment.do?id=${comment.id}" class="btn btn-sm btn-danger">Delete Comment</a>
+                                </c:if>
+                                <br>
+                            </c:forEach>
+                        </div>
+                        <c:if test="${not empty sessionScope.loginUser}">
+                            <form action="createComment.do" method="POST">
+                                <input type="hidden" name="reviewId" value="${review.id}">
+                                <input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
+                                <div class="mb-3 ms-3">
+                                    <label for="commentText">Leave a Comment:</label>
+                                    <input type="text" name="commentText" class="form-control" placeholder="Write a comment">
+                                </div>
+                                <button type="submit" class="btn btn-primary ms-3">Submit</button>
+                            </form>
+                        </c:if>
+                    </div>
+                </c:forEach>
+            </div>
+            <c:if test="${not empty sessionScope.loginUser}">
+                <div class="mb-3">
+                    <h4>Add Review</h4>
+                    <form action="createReview.do" method="POST">
+                        <input type="hidden" name="studentId" value="${student.id}">
+                        <input type="hidden" name="userId" value="${sessionScope.loginUser.id}">
+                        <div class="mb-3">
+                            <label for="title">Title:</label>
+                            <input type="text" name="title" class="form-control" placeholder="Title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText">Write a Review:</label>
+                            <input type="text" name="reviewText" class="form-control" placeholder="Write a review">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subjectId">Subject:</label>
+                            <select name="subjectId" class="form-select">
+                                <option value="1">Math</option>
+                                <option value="2">English</option>
+                                <option value="3">History</option>
+                                <option value="4">Science</option>
+                                <option value="5">Computer Science</option>
+                                <option value="6">Music</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating">Rating:</label>
+                            <select name="rating" class="form-select">
+                                <option value="1">*</option>
+                                <option value="2">**</option>
+                                <option value="3">***</option>
+                                <option value="4">****</option>
+                                <option value="5">*****</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </c:if>
+        </c:if>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
