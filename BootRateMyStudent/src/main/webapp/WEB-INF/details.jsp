@@ -14,9 +14,13 @@
         <c:if test="${not empty school}">
             <div class="mb-3">
                 <h3>Students in ${school.name}</h3>
+                <ul class="list-group">
                 <c:forEach var="student" items="${school.students}">
-                    <a href="details.do?studentId=${student.id}" class="btn btn-link">${student.firstName} ${student.lastName}</a><br>
+                <li class="list-group-item">
+                    <a href="details.do?studentId=${student.id}" class="text-decoration-none">${student.firstName} ${student.lastName}</a><br>
+                </li>
                 </c:forEach>
+                </ul>
             </div>
         </c:if>
         <c:if test="${not empty student}">
