@@ -215,10 +215,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `school` (`id`, `name`) VALUES (1, 'Skill Distillery');
-INSERT INTO `school` (`id`, `name`) VALUES (2, 'Fairview Elementary');
-INSERT INTO `school` (`id`, `name`) VALUES (3, 'Fox Mill Elementary');
-INSERT INTO `school` (`id`, `name`) VALUES (4, 'School Of Rock');
+INSERT INTO `school` (`id`, `name`) VALUES (1, 'Hogwarts School of Witchcraft and Wizardry');
+INSERT INTO `school` (`id`, `name`) VALUES (2, 'Beauxbatons Academy of Magic');
+INSERT INTO `school` (`id`, `name`) VALUES (3, 'Durmstrang Institute');
 
 COMMIT;
 
@@ -228,9 +227,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (1, 'Allan', 'Meyer', 2027, 3);
-INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (2, 'Timmy', 'Turner', 2007, 1);
-INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (3, 'Johnny', 'Cochran', 1986, 4);
+INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (1, 'Harry', 'Potter', 1998, 1);
+INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (2, 'Ron', 'Weasley', 1998, 1);
+INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (3, 'Hermoine', 'Granger', 1998, 1);
+INSERT INTO `student` (`id`, `first_name`, `last_name`, `graduation_year`, `school_id`) VALUES (4, 'Draco', 'Malfoy', 1998, 1);
 
 COMMIT;
 
@@ -240,12 +240,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `subject` (`id`, `name`) VALUES (1, 'math');
-INSERT INTO `subject` (`id`, `name`) VALUES (2, 'english');
-INSERT INTO `subject` (`id`, `name`) VALUES (3, 'history');
-INSERT INTO `subject` (`id`, `name`) VALUES (4, 'science');
-INSERT INTO `subject` (`id`, `name`) VALUES (5, 'computer science');
-INSERT INTO `subject` (`id`, `name`) VALUES (6, 'music');
+INSERT INTO `subject` (`id`, `name`) VALUES (1, 'Defense Against the Dark Arts');
+INSERT INTO `subject` (`id`, `name`) VALUES (2, 'Potions');
+INSERT INTO `subject` (`id`, `name`) VALUES (3, 'Transfiguration');
+INSERT INTO `subject` (`id`, `name`) VALUES (4, 'Divination');
+INSERT INTO `subject` (`id`, `name`) VALUES (5, 'Administration');
 
 COMMIT;
 
@@ -255,32 +254,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `RateMyStudentDB`;
-INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (1, 'teacher', 'teacher', 1, 'admin', 1, 'Jill', 'Valentine', 'JValentine@SkillDistillery.com', 5);
-INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (2, 'Jblack', 'Jblack', 1, 'user', 4, 'Jack', 'Black', 'Jblack@SOR.com', 6);
-INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (3, 'frizzle', 'frizzle', 1, 'user', 3, 'Mrs.', 'Frizzle', 'frizzle@magicschoolbus.edu', 4);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `review`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `RateMyStudentDB`;
-INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`, `title`) VALUES (1, 'This is a review!', 2, 3, 4, 6, DEFAULT, 'This is a Title');
-INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`, `title`) VALUES (2, 'This is a bad review!', 3, 1, 1, 4, DEFAULT, 'Title here!');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `comment`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `RateMyStudentDB`;
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (1, 1, NULL, 'This is a comment', NULL, 1);
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (2, 1, 1, 'This is a comment on a comment.', NULL, 2);
-INSERT INTO `comment` (`id`, `review_id`, `in_reply_to`, `comment_text`, `created_at`, `teacher_id`) VALUES (3, 2, NULL, 'This is another comment', NULL, 2);
+INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (1, 'Adumbledore', 'Fawkes', 1, 'admin', 1, 'Albus', 'Dumbledore', 'Adumb@Hogwarts.edu', 5);
+INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (2, 'Mmcgonagall', 'Tabby', 1, 'user', 1, 'Minerva', 'McGonagall', 'Mmine@Hogwarts.edu', 3);
+INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (3, 'Ssnape', 'Lily', 1, 'user', 1, 'Severus', 'Snape', 'Ssnap@Hogwarts.edu', 2);
+INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (4, 'STrelawny', 'Death', 1, 'user', 1, 'Sybill', 'Trelawney', 'Strel@Hogwarts.edu', 4);
+INSERT INTO `teacher` (`id`, `username`, `password`, `enabled`, `role`, `school_id`, `first_name`, `last_name`, `email`, `subject_id`) VALUES (5, 'RLupin', 'Moony', 1, 'user', 1, 'Remus', 'Lupin', 'RLupi@Hogwarts.edu', 1);
 
 COMMIT;
 
@@ -294,19 +272,6 @@ INSERT INTO `badge` (`id`, `name`, `image`) VALUES (1, 'Hard Worker', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (2, 'Loud Mouth', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (3, 'Brown Noser', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (4, 'Helpful', NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `review_badge`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `RateMyStudentDB`;
-INSERT INTO `review_badge` (`review_id`, `badge_id`) VALUES (1, 1);
-INSERT INTO `review_badge` (`review_id`, `badge_id`) VALUES (1, 4);
-INSERT INTO `review_badge` (`review_id`, `badge_id`) VALUES (2, 2);
-INSERT INTO `review_badge` (`review_id`, `badge_id`) VALUES (2, 3);
 
 COMMIT;
 
