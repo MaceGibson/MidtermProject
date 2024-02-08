@@ -33,15 +33,18 @@
                 <c:forEach var="review" items="${student.reviews}">
                     <div class="mb-3 border p-3">
                     	<h4>${review.title }</h4>
+                    	<h6>${review.user.firstName} ${review.user.lastName}</h6>
                         <p>${review.reviewText}</p>
                         <c:if test="${review.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
                             <a href="updateReviewForm.do?id=${review.id}" class="btn btn-sm btn-primary">Update Review</a>
                             <a href="deleteReview.do?id=${review.id}" class="btn btn-sm btn-danger">Delete Review</a>
                         </c:if>
                         <br>
+                        <c:if test="${not empty review.comments}">
                         <div class="ms-3">
                             <h5>Comments:</h5>
                             <c:forEach var="comment" items="${review.comments}">
+                            	<h6>${comment.user.firstName} ${comment.user.lastName}</h6>
                                 <p>${comment.commentText}</p>
                                 <c:if test="${comment.user == sessionScope.loginUser || sessionScope.loginUser.role eq 'admin'}">
                                     <a href="updateCommentForm.do?id=${comment.id}" class="btn btn-sm btn-primary">Update Comment</a>
@@ -50,6 +53,7 @@
                                 <br>
                             </c:forEach>
                         </div>
+                        </c:if>
                         <c:if test="${not empty sessionScope.loginUser}">
                             <form action="createComment.do" method="POST">
                                 <input type="hidden" name="reviewId" value="${review.id}">
