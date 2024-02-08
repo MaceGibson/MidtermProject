@@ -264,6 +264,16 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `review`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `RateMyStudentDB`;
+INSERT INTO `review` (`id`, `review_text`, `teacher_id`, `student_id`, `rating`, `subject_id`, `created_at`, `title`) VALUES (1, 'Mr. Potter\'s aptitude for Transfiguration is undeniable, showcasing remarkable progress throughout the term. His ability to think quickly and adapt spells to fit the situation demonstrates true mastery.', 2, 1, 5, 3, DEFAULT, 'Well Done Mr. Potter');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `badge`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -272,6 +282,16 @@ INSERT INTO `badge` (`id`, `name`, `image`) VALUES (1, 'Hard Worker', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (2, 'Loud Mouth', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (3, 'Brown Noser', NULL);
 INSERT INTO `badge` (`id`, `name`, `image`) VALUES (4, 'Helpful', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `review_badge`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `RateMyStudentDB`;
+INSERT INTO `review_badge` (`review_id`, `badge_id`) VALUES (1, 1);
 
 COMMIT;
 

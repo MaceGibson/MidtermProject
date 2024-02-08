@@ -26,8 +26,6 @@ public class ReviewController {
 
 	@GetMapping(path = { "/", "home.do" })
 	public String home(Model model) {
-		User u = userDAO.authenticateUser("teacher", "teacher");
-		model.addAttribute("testUser", u);
 		return "home";
 	}
 
