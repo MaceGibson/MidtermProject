@@ -44,10 +44,10 @@ class StudentTest {
     void test_mapping() {
         assertNotNull(student);
         assertNotNull(student.getSchool());
-        assertEquals("Allan", student.getFirstName());
-        assertEquals("Meyer", student.getLastName());
-        assertEquals(2027, student.getGraduationYear());
-        assertEquals(3, student.getSchool().getId());
+        assertEquals("Harry", student.getFirstName());
+        assertEquals("Potter", student.getLastName());
+        assertEquals(1998, student.getGraduationYear());
+        assertEquals(1, student.getSchool().getId());
     }
     
     @Test

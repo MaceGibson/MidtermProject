@@ -47,9 +47,9 @@ class UserTest {
     void test_User_has_Username() {
         assertNotNull(user);
         assertNotNull(user.getUsername());
-        assertEquals("Jblack", user.getUsername());
-        assertEquals("Jack", user.getFirstName());
-        assertEquals("Jblack@SOR.com", user.getEmail());
+        assertEquals("Mmcgonagall", user.getUsername());
+        assertEquals("Minerva", user.getFirstName());
+        assertEquals("Mmine@Hogwarts.edu", user.getEmail());
 
     }
     
@@ -57,14 +57,14 @@ class UserTest {
     void test_User_has_school() {
     	assertNotNull(user);
     	assertNotNull(user.getSchool());
-    	assertEquals("School Of Rock", user.getSchool().getName());
+    	assertEquals("Hogwarts School of Witchcraft and Wizardry", user.getSchool().getName());
     }
 
     @Test
     void test_User_has_subject() {
     	assertNotNull(user);
     	assertNotNull(user.getSubject());
-    	assertEquals("music", user.getSubject().getName());
+    	assertEquals("Transfiguration", user.getSubject().getName());
     }
     
     @Test

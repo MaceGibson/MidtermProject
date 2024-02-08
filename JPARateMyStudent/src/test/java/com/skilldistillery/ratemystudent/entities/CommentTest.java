@@ -44,14 +44,15 @@ class CommentTest {
     void test_Comment_has_Commentname() {
         assertNotNull(comment);
         assertNotNull(comment.getCommentText());
-        assertEquals("This is a comment", comment.getCommentText());
+        assertEquals("Potter's talents in Transfiguration are a credit to Gryffindor House. A lionhearted wizard with a knack for transformative magic.", comment.getCommentText());
     }
     
     @Test
     void test_Comment_has_comments() {
     	assertNotNull(comment);
     	assertNotNull(comment.getComments());
-    	assertFalse(comment.getComments().isEmpty());
+    	// DID NOT IMPLEMENT COMMENTS ON COMMENTS
+    	assertTrue(comment.getComments().isEmpty());
     }
    
 }

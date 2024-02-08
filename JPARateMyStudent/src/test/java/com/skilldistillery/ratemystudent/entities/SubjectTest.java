@@ -31,7 +31,7 @@ class SubjectTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        subject = em.find(Subject.class, 6);
+        subject = em.find(Subject.class, 3);
 
     }
 
@@ -45,7 +45,7 @@ class SubjectTest {
     void test_Subject_has_name() {
         assertNotNull(subject);
         assertNotNull(subject.getName());
-        assertEquals("music", subject.getName());
+        assertEquals("Transfiguration", subject.getName());
     }
 
     @Test

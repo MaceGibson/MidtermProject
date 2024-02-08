@@ -45,10 +45,13 @@ class ReviewTest {
     @Test
     void test_mapping() {
     	 assertNotNull(review);
-         assertEquals("This is a review!", review.getReviewText());
+         assertEquals("Mr. Potter's aptitude for Transfiguration is undeniable, "
+         		+ "showcasing remarkable progress throughout the term. His ability "
+         		+ "to think quickly and adapt spells to fit the situation demonstrates "
+         		+ "true mastery.", review.getReviewText());
          assertNotNull(review.getUser());
          assertNotNull(review.getStudent());
-         assertEquals(4, review.getRating());
+         assertEquals(5, review.getRating());
          assertNotNull(review.getSubject());
     }
     

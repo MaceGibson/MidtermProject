@@ -44,7 +44,7 @@ class SchoolTest {
     void test_School_has_Schoolname() {
         assertNotNull(school);
         assertNotNull(school.getName());
-        assertEquals("Skill Distillery", school.getName());
+        assertEquals("Hogwarts School of Witchcraft and Wizardry", school.getName());
     }
     
     @Test
