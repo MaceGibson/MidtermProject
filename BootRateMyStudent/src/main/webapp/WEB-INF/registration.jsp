@@ -9,6 +9,7 @@
 	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+	<jsp:include page="nav.jsp"/>
     <div class="container mt-5">
         <h2>New User Registration</h2>
         <form action="registerUser.do" method="POST">
