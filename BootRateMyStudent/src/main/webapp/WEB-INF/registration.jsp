@@ -41,12 +41,11 @@
             <div class="mb-3">
                 <label for="subjectId" class="form-label">Subject:</label>
                 <select name="subjectId" class="form-select" required>
-                    <option value="1">Math</option>
-                    <option value="2">English</option>
-                    <option value="3">History</option>
-                    <option value="4">Science</option>
-                    <option value="5">Computer Science</option>
-                    <option value="6">Music</option>
+                    <option value="1">Defense Against the Dark Arts</option>
+                    <option value="2">Potions</option>
+                    <option value="3">Transfiguration</option>
+                    <option value="4">Divination</option>
+                    <option value="5">Administration</option>
                 </select>
             </div>
             <div class="mb-3">

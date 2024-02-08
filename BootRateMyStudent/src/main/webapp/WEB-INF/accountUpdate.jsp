@@ -36,12 +36,11 @@
                     <div class="mb-3">
                         <label for="subjectId" class="form-label">Subject:</label>
                         <select name="subjectId" class="form-select" required>
-                            <option value="1" ${sessionScope.loginUser.subject.id == 1 ? 'selected' : ''}>Math</option>
-                            <option value="2" ${sessionScope.loginUser.subject.id == 2 ? 'selected' : ''}>English</option>
-                            <option value="3" ${sessionScope.loginUser.subject.id == 3 ? 'selected' : ''}>History</option>
-                            <option value="4" ${sessionScope.loginUser.subject.id == 4 ? 'selected' : ''}>Science</option>
-                            <option value="5" ${sessionScope.loginUser.subject.id == 5 ? 'selected' : ''}>Computer Science</option>
-                            <option value="6" ${sessionScope.loginUser.subject.id == 6 ? 'selected' : ''}>Music</option>
+                            <option value="1" ${sessionScope.loginUser.subject.id == 1 ? 'selected' : ''}>Defense Against the Dark Arts</option>
+                            <option value="2" ${sessionScope.loginUser.subject.id == 2 ? 'selected' : ''}>Potions</option>
+                            <option value="3" ${sessionScope.loginUser.subject.id == 3 ? 'selected' : ''}>Transfiguration</option>
+                            <option value="4" ${sessionScope.loginUser.subject.id == 4 ? 'selected' : ''}>Divination</option>
+                            <option value="5" ${sessionScope.loginUser.subject.id == 5 ? 'selected' : ''}>Administration</option>
                         </select>
                     </div>
                     <div class="mb-3">
